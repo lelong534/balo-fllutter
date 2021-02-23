@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'routes.dart';
 import 'screens/welcome/welcome_screen.dart';
+import 'screens/login_exist/login_exist.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: Welcome.routeName,
+      initialRoute: LoginExist.routeName,
       routes: routes,
     );
   }
