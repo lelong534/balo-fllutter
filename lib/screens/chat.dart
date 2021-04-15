@@ -16,7 +16,7 @@ class _ChatState extends State<Chat> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[Colors.blue, Colors.blue[100]],
+              colors: <Color>[Colors.blue, Colors.blue[300]],
             ),
           ),
         ),

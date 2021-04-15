@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zalo/widgets/search.dart';
+import 'post/add.dart';
 
 class Post extends StatefulWidget {
   @override
@@ -11,7 +12,8 @@ class _PostState extends State<Post> {
   buildPostHeader() {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage('https://bom.to/Yyc4NobeUpY2'),
+        backgroundImage: NetworkImage(
+            'https://i1-thethao.vnecdn.net/2021/04/01/Ozil-4900-1617262425.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=pIa-_3sUfz015cW-Jhs5EA'),
       ),
       title: GestureDetector(
         onTap: () => print('showing profile'),
@@ -28,17 +30,16 @@ class _PostState extends State<Post> {
   }
 
   buildPostItem() {
-    return Column(
-      children: <Widget>[
-        buildPostHeader(),
-        buildPostContent(),
-        buildPostImage(),
-        buildPostFooter(),
-        Container(
-          color: Colors.grey[300],
-          height: 8,
-        )
-      ],
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          buildPostHeader(),
+          buildPostContent(),
+          buildPostImage(),
+          buildPostFooter(),
+        ],
+      ),
     );
   }
 
@@ -50,12 +51,12 @@ class _PostState extends State<Post> {
           child: Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-              'Cô gái người dân tộc',
-              style: TextStyle(fontSize: 16),
+              'Cô gái người dân tộc. Cô gái người dân tộc. Cô gái người dân tộc. Cô gái người dân tộc. ',
+              style: TextStyle(fontSize: 14, height: 1.5),
             ),
           ),
         ),
-        SizedBox(height: 20)
+        SizedBox(height: 10)
       ],
     );
   }
@@ -65,7 +66,8 @@ class _PostState extends State<Post> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Image.network('https://bom.to/0Ne4CwVWQdDF'),
+          Image.network(
+              'https://i1-thethao.vnecdn.net/2021/04/01/Ozil-4900-1617262425.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=pIa-_3sUfz015cW-Jhs5EA')
         ],
       ),
     );
@@ -77,7 +79,7 @@ class _PostState extends State<Post> {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 40.0, left: 20.0)),
+            Padding(padding: EdgeInsets.only(top: 60.0, left: 20.0)),
             GestureDetector(
               onTap: () => print('liking post'),
               child: Icon(
@@ -107,13 +109,14 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: <Color>[Colors.blue, Colors.blue[100]],
+              colors: <Color>[Colors.blue, Colors.blue[300]],
             ),
           ),
         ),
@@ -142,11 +145,52 @@ class _PostState extends State<Post> {
           ],
         ),
       ),
-      body: ListView(
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            buildPostAddition(),
+            SizedBox(height: 8),
+            buildPostItem(),
+            SizedBox(height: 8),
+            buildPostItem(),
+            SizedBox(height: 8),
+            buildPostItem(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildPostAddition() {
+    return Container(
+      height: 60,
+      color: Colors.white,
+      child: Row(
         children: <Widget>[
-          buildPostItem(),
-          buildPostItem(),
-          buildPostItem(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+          ),
+          CircleAvatar(
+            backgroundImage: NetworkImage(
+                'https://i1-thethao.vnecdn.net/2021/04/01/Ozil-4900-1617262425.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=pIa-_3sUfz015cW-Jhs5EA'),
+          ),
+          SizedBox(width: 14),
+          Expanded(
+            child: TextField(
+              readOnly: true,
+              decoration: InputDecoration(
+                hintText: "Hôm nay bạn thế nào?",
+                hintStyle: TextStyle(
+                  color: Colors.black.withOpacity(0.6),
+                ),
+                border: InputBorder.none,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, AddPost.routeName);
+              },
+            ),
+          ),
         ],
       ),
     );

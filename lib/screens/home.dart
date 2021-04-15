@@ -121,13 +121,14 @@ class _MessageState extends State<Message> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 10,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
+            icon: Icon(Icons.chat_bubble),
             label: 'Chat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_page),
+            icon: Icon(Icons.portrait),
             label: 'Danh bạ',
           ),
           BottomNavigationBarItem(
@@ -150,7 +151,9 @@ class _MessageState extends State<Message> {
         iconSize: 32,
         onTap: (index) {
           setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
+          // _pageController.jumpToPage(index);
+          _pageController.animateToPage(index,
+              duration: Duration(milliseconds: 300), curve: Curves.ease);
         },
       ),
       body: PageView(
