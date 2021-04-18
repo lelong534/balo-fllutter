@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:zalo/widgets/search.dart';
 
@@ -23,7 +24,7 @@ class _ChatState extends State<Chat> {
         automaticallyImplyLeading: false,
         title: Row(
           children: <Widget>[
-            Icon(Icons.search),
+            Icon(EvaIcons.searchOutline),
             SizedBox(
               width: 20,
             ),

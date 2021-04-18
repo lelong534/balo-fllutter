@@ -1,3 +1,5 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:eva_icons_flutter/icon_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:zalo/widgets/search.dart';
@@ -51,7 +53,7 @@ class _PostState extends State<Post> {
           child: Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-              'Cô gái người dân tộc. Cô gái người dân tộc. Cô gái người dân tộc. Cô gái người dân tộc. ',
+              'Chào buổi sáng',
               style: TextStyle(fontSize: 14, height: 1.5),
             ),
           ),
@@ -123,7 +125,7 @@ class _PostState extends State<Post> {
         automaticallyImplyLeading: false,
         title: Row(
           children: <Widget>[
-            Icon(Icons.search),
+            Icon(EvaIcons.searchOutline),
             SizedBox(
               width: 20,
             ),

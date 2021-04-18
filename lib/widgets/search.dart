@@ -1,3 +1,4 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class Search extends SearchDelegate {
@@ -5,7 +6,7 @@ class Search extends SearchDelegate {
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
       IconButton(
-        icon: Icon(Icons.close),
+        icon: Icon(EvaIcons.searchOutline),
         onPressed: () {},
       )
     ];

@@ -110,42 +110,39 @@ class _AddPostState extends State<AddPost> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-              child: TextFormField(
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: "Bạn đang nghĩ gì?",
-                  border: InputBorder.none,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            child: TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              decoration: InputDecoration(
+                hintText: "Bạn đang nghĩ gì?",
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10.0),
+          ),
+          Expanded(
+            child: buildGridView(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: ElevatedButton(
+              child: Text("Chọn ảnh"),
+              onPressed: loadAssets,
+              style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
-            ),
-            Expanded(
-              child: buildGridView(),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.collections,
-                    color: Colors.green,
-                    size: 30,
-                  ),
-                  onPressed: loadAssets,
-                ),
-              ],
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
