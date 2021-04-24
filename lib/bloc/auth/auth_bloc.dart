@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:zalo/repositories/userRepository.dart';
+import 'package:zalo/repositories/user_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'auth.dart';
@@ -29,7 +29,7 @@ class AuthenticationBloc
 
     if (event is LoggedIn) {
       yield AuthenticationLoading();
-      await userRepository.persistToken(event.token);
+      await userRepository.persistToken(event.userInfo);
       yield AuthenticationAuthenticated();
     }
 

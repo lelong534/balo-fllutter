@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:zalo/bloc/auth/auth.dart';
-import 'package:zalo/repositories/userRepository.dart';
+import 'package:zalo/repositories/user_repository.dart';
 import 'package:meta/meta.dart';
-import 'package:equatable/equatable.dart';
 import 'package:bloc/bloc.dart';
 import 'login.dart';
 
@@ -26,11 +25,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        final token = await userRepository.login(
+        final userInfo = await userRepository.login(
           event.phonenumber,
           event.password,
         );
-        authenticationBloc.add(LoggedIn(token: token));
+        authenticationBloc.add(LoggedIn(userInfo: userInfo));
         yield LoginInitial();
       } catch (error) {
         yield LoginFailure(error: error.toString());

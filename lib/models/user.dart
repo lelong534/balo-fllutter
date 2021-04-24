@@ -1,28 +1,25 @@
 class User {
   final String id;
-  final String username;
+  final String name;
   final String phonenumber;
   final String avatar;
-  final String address;
-  final String email;
+  final String birthday;
   final String description;
 
   User(
     this.id,
-    this.username,
+    this.name,
     this.phonenumber,
     this.avatar,
-    this.address,
-    this.email,
+    this.birthday,
     this.description,
   );
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json["id"],
-        username = json["username"],
-        phonenumber = json["phonenumber"],
+      : id = json["id"].toString(),
+        name = json["name"],
+        phonenumber = json["phone_number"],
         avatar = json["avatar"],
-        address = json["address"],
-        email = json["email"],
+        birthday = json["birthday"],
         description = json["descriprion"];
 }

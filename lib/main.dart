@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/auth/auth.dart';
-import 'repositories/userRepository.dart';
+import 'repositories/user_repository.dart';
 
 import 'routes.dart';
 import 'screens/welcome.dart';

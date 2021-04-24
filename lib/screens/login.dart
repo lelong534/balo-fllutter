@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zalo/bloc/auth/auth.dart';
 import 'package:zalo/bloc/login/login.dart';
-import 'package:zalo/repositories/userRepository.dart';
+import 'package:zalo/repositories/user_repository.dart';
 import 'package:zalo/widgets/login_form.dart';
 
 class Login extends StatefulWidget {

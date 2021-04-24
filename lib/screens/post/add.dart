@@ -1,7 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:zalo/bloc/get_post_bloc.dart';
 import 'package:zalo/models/user.dart';
+import 'package:dio/dio.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class AddPost extends StatefulWidget {
@@ -16,9 +21,11 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
-  File file;
-  List<Asset> images = [];
+  File video;
+  List<Asset> imagesAsset = [];
   String errorText;
+  final _describedController = TextEditingController();
+  List<MultipartFile> imagesFile = [];
 
   @override
   void initState() {
@@ -26,11 +33,11 @@ class _AddPostState extends State<AddPost> {
   }
 
   Widget buildGridView() {
-    if (images != null)
+    if (imagesAsset != null)
       return GridView.count(
         crossAxisCount: 2,
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
+        children: List.generate(imagesAsset.length, (index) {
+          Asset asset = imagesAsset[index];
           return AssetThumb(
             asset: asset,
             width: 300,
@@ -44,7 +51,7 @@ class _AddPostState extends State<AddPost> {
 
   Future<void> loadAssets() async {
     setState(() {
-      images = [];
+      imagesAsset = [];
     });
 
     List<Asset> resultList;
@@ -69,15 +76,32 @@ class _AddPostState extends State<AddPost> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
+    for (var asset in resultList) {
+      ByteData byteData = await asset.getByteData(quality: 80);
+
+      if (byteData != null) {
+        List<int> imageData = byteData.buffer.asUint8List();
+        MultipartFile multipartFile = MultipartFile.fromBytes(
+          imageData,
+          filename: 'test.jpg',
+        );
+        imagesFile.add(multipartFile);
+      }
+    }
+
     setState(() {
-      images = resultList;
+      imagesAsset = resultList;
       if (error == null) errorText = 'No Error Dectected';
     });
   }
 
+  void _submitAddPostForm() {
+    postBloc..addPost(imagesFile, video, _describedController.text);
+  }
+
   clearImage() {
     setState(() {
-      images = null;
+      imagesFile = null;
       Navigator.pop(context);
     });
   }
@@ -97,7 +121,7 @@ class _AddPostState extends State<AddPost> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextButton(
-              onPressed: () {},
+              onPressed: _submitAddPostForm,
               child: Text(
                 'ĐĂNG',
                 style: TextStyle(
@@ -113,14 +137,17 @@ class _AddPostState extends State<AddPost> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: TextFormField(
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              decoration: InputDecoration(
-                hintText: "Bạn đang nghĩ gì?",
-                border: InputBorder.none,
+          Form(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                controller: _describedController,
+                decoration: InputDecoration(
+                  hintText: "Bạn đang nghĩ gì?",
+                  border: InputBorder.none,
+                ),
               ),
             ),
           ),
