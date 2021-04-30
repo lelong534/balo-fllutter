@@ -8,9 +8,9 @@ class Post {
   final String created;
   final String isLiked;
   // final String isHidden;
-  // final String authorId;
-  // final String authorName;
-  // final String authorAvatar;
+  final String authorId;
+  final String authorName;
+  final String authorAvatar;
 
   Post(
     this.id,
@@ -22,9 +22,9 @@ class Post {
     this.created,
     this.isLiked,
     // this.isHidden,
-    // this.authorId,
-    // this.authorName,
-    // this.authorAvatar,
+    this.authorId,
+    this.authorName,
+    this.authorAvatar,
   );
 
   Post.fromJson(Map<String, dynamic> json)
@@ -35,9 +35,9 @@ class Post {
         like = json["like"],
         // comment = json["comment"],
         created = json["created"],
-        isLiked = json["is_liked"];
-  // isHidden = json["is_hidden"],
-  // authorId = json["authorId"],
-  // authorName = json["author"]["username"],
-  // authorAvatar = json["author"]["avatar"];
+        isLiked = json["is_liked"],
+        // isHidden = json["is_hidden"],
+        authorId = json["authorId"],
+        authorName = json["author"]["name"],
+        authorAvatar = json["author"]["avatar"];
 }

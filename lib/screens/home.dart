@@ -78,7 +78,7 @@ class _MessageState extends State<Message> {
           Chat(),
           Contact(),
           Group(),
-          Post(),
+          PostScreen(),
           More(),
         ],
       ),

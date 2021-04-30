@@ -1,19 +1,20 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:zalo/bloc/get_post_bloc.dart';
+import 'package:zalo/models/post.dart';
+import 'package:zalo/models/post_response.dart';
 import 'package:zalo/models/user.dart';
 import 'package:zalo/models/user_response.dart';
 import 'package:zalo/widgets/search.dart';
 import 'package:zalo/bloc/get_user_bloc.dart';
 import 'post/add.dart';
 
-class Post extends StatefulWidget {
+class PostScreen extends StatefulWidget {
   @override
-  _PostState createState() => _PostState();
+  _PostScreenState createState() => _PostScreenState();
 }
 
-class _PostState extends State<Post> {
+class _PostScreenState extends State<PostScreen> {
   int index = 0;
   @override
   void initState() {
@@ -102,27 +103,33 @@ class _PostState extends State<Post> {
     );
   }
 
-  buildPostHeader() {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(
-            'https://i1-thethao.vnecdn.net/2021/04/01/Ozil-4900-1617262425.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=pIa-_3sUfz015cW-Jhs5EA'),
-      ),
-      title: GestureDetector(
-        onTap: () => print('showing profile'),
-        child: Text(
-          'Long Le',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+  buildPostHeader(Post postItem) {
+    var avatarLink;
+    if (postItem.authorAvatar == null) {
+      avatarLink = "";
+      return Container();
+    } else {
+      avatarLink = postItem.authorAvatar;
+      return ListTile(
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(avatarLink),
+        ),
+        title: GestureDetector(
+          onTap: () => print('showing profile'),
+          child: Text(
+            'Long Le',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      subtitle: Text('3 giờ trước'),
-    );
+        subtitle: Text('3 giờ trước'),
+      );
+    }
   }
 
-  buildPostContent() {
+  buildPostContent(Post postItem) {
     return Column(
       children: [
         SizedBox(
@@ -130,7 +137,7 @@ class _PostState extends State<Post> {
           child: Padding(
             padding: EdgeInsets.only(left: 18),
             child: Text(
-              'Chào buổi sáng',
+              postItem.described,
               style: TextStyle(fontSize: 14, height: 1.5),
             ),
           ),
@@ -140,19 +147,23 @@ class _PostState extends State<Post> {
     );
   }
 
-  buildPostImage() {
-    return GestureDetector(
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Image.network(
-              'https://i1-thethao.vnecdn.net/2021/04/01/Ozil-4900-1617262425.jpg?w=0&h=0&q=100&dpr=1&fit=crop&s=pIa-_3sUfz015cW-Jhs5EA')
-        ],
-      ),
-    );
+  buildPostImage(Post postItem) {
+    var avatarLink;
+    if (postItem.images.length == 0) {
+      avatarLink = "";
+      return Container();
+    } else {
+      avatarLink = postItem.images[0]["link"];
+      return GestureDetector(
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[Image.network(avatarLink, scale: 0.6)],
+        ),
+      );
+    }
   }
 
-  buildPostFooter() {
+  buildPostFooter(Post postItem) {
     return Column(
       children: <Widget>[
         Row(
@@ -160,20 +171,21 @@ class _PostState extends State<Post> {
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 60.0, left: 20.0)),
             GestureDetector(
-              onTap: () => print('liking post'),
+              onTap: () => postBloc..likePost(postItem.id),
               child: Icon(
-                Icons.favorite,
+                // Icons.favorite,
+                EvaIcons.heartOutline,
                 size: 28.0,
-                color: Colors.pink,
+                // color: Colors.pink,
               ),
             ),
             Padding(padding: EdgeInsets.only(right: 5.0)),
-            Text('12'),
+            Text(postItem.like.toString()),
             Padding(padding: EdgeInsets.only(right: 20.0)),
             GestureDetector(
               onTap: () => print('showing comments'),
               child: Icon(
-                Icons.chat_outlined,
+                EvaIcons.messageCircleOutline,
                 size: 28.0,
               ),
             ),
@@ -185,15 +197,15 @@ class _PostState extends State<Post> {
     );
   }
 
-  buildPostItem() {
+  buildPostItem(Post postItem) {
     return Container(
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          buildPostHeader(),
-          buildPostContent(),
-          buildPostImage(),
-          buildPostFooter(),
+          buildPostHeader(postItem),
+          buildPostContent(postItem),
+          buildPostImage(postItem),
+          buildPostFooter(postItem),
         ],
       ),
     );
@@ -243,39 +255,34 @@ class _PostState extends State<Post> {
                 ],
               ),
             ),
-            body:
-                // SingleChildScrollView(
-                //   physics: AlwaysScrollableScrollPhysics(),
-                //   child:
-                // Column(
-
-                //   children: <Widget>[
-                //     buildPostAddition(user),
-                //     SizedBox(height: 8),
-                //     buildPostItem(),
-                //     SizedBox(height: 8),
-                //     buildPostItem(),
-                //     SizedBox(height: 8),
-                //     buildPostItem(),
-                //   ],
-                // ),
-                ListView.builder(
-              itemBuilder: (context, index) {
-                return Column(
-                  children: <Widget>[
-                    buildPostAddition(user),
-                    SizedBox(height: 8),
-                    buildPostItem(),
-                    SizedBox(height: 8),
-                    buildPostItem(),
-                    SizedBox(height: 8),
-                    buildPostItem(),
-                  ],
-                );
-              },
-              itemCount: 20,
+            body: Column(
+              children: <Widget>[
+                Expanded(child: buildPostAddition(user), flex: 1),
+                SizedBox(height: 6),
+                Expanded(
+                  flex: 6,
+                  child: StreamBuilder<PostResponse>(
+                    stream: postBloc.subject.stream,
+                    builder: (context, AsyncSnapshot<PostResponse> snapshot) {
+                      if (snapshot.hasData) {
+                        List<Post> posts = snapshot.data.posts;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Column(children: <Widget>[
+                              buildPostItem(posts[index]),
+                              SizedBox(height: 6)
+                            ]);
+                          },
+                          itemCount: posts.length,
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                ),
+              ],
             ),
-            // ),
           );
         }
         return _buildPostLoading();

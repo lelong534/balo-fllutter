@@ -21,6 +21,10 @@ class PostBloc {
     await _repository.addPost(images, video, described);
   }
 
+  likePost(int postid) async {
+    await _repository.likePost(postid);
+  }
+
   void dispose() async {
     _subject.close();
   }

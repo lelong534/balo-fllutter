@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:zalo/models/post_response.dart';
 
 class PostRepository {
   static String mainUrl = "https://bk-zalo.herokuapp.com";
   var getListPostsUrl = '$mainUrl/api/get_list_posts';
   var addPostUrl = '$mainUrl/api/add_post';
+  var likePostUrl = '$mainUrl/api/like';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -46,6 +46,21 @@ class PostRepository {
       print(response);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
+    }
+  }
+
+  Future<void> likePost(int postid) async {
+    var token = await storage.read(key: "token");
+
+    try {
+      Response response = await _dio.post(likePostUrl, data: {
+        "token": token,
+        "id": postid,
+      });
+      print(response);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return PostResponse.withError("$error");
     }
   }
 }
