@@ -112,114 +112,6 @@ class _PostScreenState extends State<PostScreen> {
     );
   }
 
-  buildPostHeader(Post postItem) {
-    var avatarLink;
-    if (postItem.authorAvatar == null) {
-      avatarLink = "";
-      return Container();
-    } else {
-      avatarLink = postItem.authorAvatar;
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(avatarLink),
-        ),
-        title: GestureDetector(
-          onTap: () => print('showing profile'),
-          child: Text(
-            'Long Le',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        subtitle: Text('3 giờ trước'),
-      );
-    }
-  }
-
-  buildPostContent(Post postItem) {
-    return Column(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.only(left: 18),
-            child: Text(
-              postItem.described,
-              style: TextStyle(fontSize: 14, height: 1.5),
-            ),
-          ),
-        ),
-        SizedBox(height: 10)
-      ],
-    );
-  }
-
-  buildPostImage(Post postItem) {
-    var avatarLink;
-    if (postItem.images.length == 0) {
-      avatarLink = "";
-      return Container();
-    } else {
-      avatarLink = postItem.images[0]["link"];
-      return GestureDetector(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[Image.network(avatarLink, scale: 0.6)],
-        ),
-      );
-    }
-  }
-
-  buildPostFooter(Post postItem) {
-    bool isLikePostItem = postItem.isLiked;
-    return Column(
-      children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 60.0, left: 20.0)),
-            GestureDetector(
-              onTap: () => handleLikePostItem(postItem),
-              child: Icon(
-                EvaIcons.heart,
-                size: 28.0,
-                color: isLikePostItem ? Colors.pink : null,
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(right: 5.0)),
-            Text(postItem.like.toString()),
-            Padding(padding: EdgeInsets.only(right: 20.0)),
-            GestureDetector(
-              onTap: () => print('showing comments'),
-              child: Icon(
-                EvaIcons.messageCircleOutline,
-                size: 28.0,
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(right: 5.0)),
-            Text('2'),
-          ],
-        ),
-      ],
-    );
-  }
-
-  buildPostItem(Post postItem) {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: <Widget>[
-          buildPostHeader(postItem),
-          buildPostContent(postItem),
-          buildPostImage(postItem),
-          buildPostFooter(postItem),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UserResponse>(
@@ -279,7 +171,6 @@ class _PostScreenState extends State<PostScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Column(children: <Widget>[
-                              // buildPostItem(posts[index]),
                               PostItem(postItem: posts[index]),
                               SizedBox(height: 6)
                             ]);
