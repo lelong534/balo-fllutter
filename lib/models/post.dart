@@ -6,7 +6,7 @@ class Post {
   final int like;
   // final int comment;
   final String created;
-  final String isLiked;
+  final bool isLiked;
   // final String isHidden;
   final String authorId;
   final String authorName;
@@ -35,7 +35,7 @@ class Post {
         like = json["like"],
         // comment = json["comment"],
         created = json["created"],
-        isLiked = json["is_liked"],
+        isLiked = json["isLiked"],
         // isHidden = json["is_hidden"],
         authorId = json["authorId"],
         authorName = json["author"]["name"],

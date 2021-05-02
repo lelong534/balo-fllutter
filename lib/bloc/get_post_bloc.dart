@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:zalo/models/post_response.dart';
 import 'package:zalo/repositories/post_repository.dart';
@@ -23,6 +22,10 @@ class PostBloc {
 
   likePost(int postid) async {
     await _repository.likePost(postid);
+  }
+
+  unLikePost(int postid) async {
+    await _repository.unLikePost(postid);
   }
 
   void dispose() async {

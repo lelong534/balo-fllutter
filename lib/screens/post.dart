@@ -5,6 +5,7 @@ import 'package:zalo/models/post.dart';
 import 'package:zalo/models/post_response.dart';
 import 'package:zalo/models/user.dart';
 import 'package:zalo/models/user_response.dart';
+import 'package:zalo/widgets/post_item.dart';
 import 'package:zalo/widgets/search.dart';
 import 'package:zalo/bloc/get_user_bloc.dart';
 import 'post/add.dart';
@@ -21,6 +22,14 @@ class _PostScreenState extends State<PostScreen> {
     super.initState();
     userBloc..getUser();
     postBloc..getListPosts(index);
+  }
+
+  void handleLikePostItem(Post postItem) {
+    if (postItem.isLiked == false) {
+      postBloc..likePost(postItem.id);
+    } else {
+      postBloc..unLikePost(postItem.id);
+    }
   }
 
   buildPostAddition(User data) {
@@ -164,6 +173,7 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   buildPostFooter(Post postItem) {
+    bool isLikePostItem = postItem.isLiked;
     return Column(
       children: <Widget>[
         Row(
@@ -171,12 +181,11 @@ class _PostScreenState extends State<PostScreen> {
           children: <Widget>[
             Padding(padding: EdgeInsets.only(top: 60.0, left: 20.0)),
             GestureDetector(
-              onTap: () => postBloc..likePost(postItem.id),
+              onTap: () => handleLikePostItem(postItem),
               child: Icon(
-                // Icons.favorite,
-                EvaIcons.heartOutline,
+                EvaIcons.heart,
                 size: 28.0,
-                // color: Colors.pink,
+                color: isLikePostItem ? Colors.pink : null,
               ),
             ),
             Padding(padding: EdgeInsets.only(right: 5.0)),
@@ -270,7 +279,8 @@ class _PostScreenState extends State<PostScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Column(children: <Widget>[
-                              buildPostItem(posts[index]),
+                              // buildPostItem(posts[index]),
+                              PostItem(postItem: posts[index]),
                               SizedBox(height: 6)
                             ]);
                           },

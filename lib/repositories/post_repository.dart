@@ -9,6 +9,7 @@ class PostRepository {
   var getListPostsUrl = '$mainUrl/api/get_list_posts';
   var addPostUrl = '$mainUrl/api/add_post';
   var likePostUrl = '$mainUrl/api/like';
+  var unLikePostUrl = '$mainUrl/api/un_like';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -23,6 +24,7 @@ class PostRepository {
         "index": index,
         "count": 20,
       });
+      print(response);
       return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -54,6 +56,21 @@ class PostRepository {
 
     try {
       Response response = await _dio.post(likePostUrl, data: {
+        "token": token,
+        "id": postid,
+      });
+      print(response);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return PostResponse.withError("$error");
+    }
+  }
+
+  Future<void> unLikePost(int postid) async {
+    var token = await storage.read(key: "token");
+
+    try {
+      Response response = await _dio.post(unLikePostUrl, data: {
         "token": token,
         "id": postid,
       });
