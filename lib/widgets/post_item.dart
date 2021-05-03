@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:zalo/bloc/get_post_bloc.dart';
 import 'package:zalo/models/post.dart';
+import 'package:zalo/screens/post/post_detail.dart';
 
 class PostItem extends StatefulWidget {
   final Post postItem;
@@ -102,7 +103,6 @@ class _PostItemState extends State<PostItem> {
   }
 
   buildPostFooter(Post postItem) {
-    // isLikedByUser = postItem.isLiked;
     return Column(
       children: <Widget>[
         Row(
@@ -112,16 +112,26 @@ class _PostItemState extends State<PostItem> {
             GestureDetector(
               onTap: () => handleLikePostItem(postItem),
               child: Icon(
-                EvaIcons.heart,
+                isLikedByUser ? EvaIcons.heart : EvaIcons.heartOutline,
                 size: 28.0,
-                color: isLikedByUser ? Colors.pink : null,
+                color: isLikedByUser ? Colors.pink : Colors.black,
               ),
             ),
             Padding(padding: EdgeInsets.only(right: 5.0)),
             Text(countLikes.toString()),
             Padding(padding: EdgeInsets.only(right: 20.0)),
             GestureDetector(
-              onTap: () => print('showing comments'),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetail(
+                    postDetail: postItem,
+                    isLikedByUser: isLikedByUser,
+                    countLikes: countLikes,
+                    handleLikePostItem: handleLikePostItem,
+                  ),
+                ),
+              ),
               child: Icon(
                 EvaIcons.messageCircleOutline,
                 size: 28.0,
