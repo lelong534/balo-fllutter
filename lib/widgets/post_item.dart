@@ -87,19 +87,81 @@ class _PostItemState extends State<PostItem> {
   }
 
   buildPostImage(Post postItem) {
-    var avatarLink;
     if (postItem.images.length == 0) {
-      avatarLink = "";
       return Container();
-    } else {
-      avatarLink = postItem.images[0]["link"];
-      return GestureDetector(
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[Image.network(avatarLink, scale: 0.6)],
+    } else if (postItem.images.length == 1) {
+      return Container(
+          child: Image.network(postItem.images[0]["link"], scale: 0.6));
+    } else if (postItem.images.length == 2) {
+      return Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+                child: Image.network(postItem.images[0]["link"], scale: 0.6)),
+            Expanded(
+                child: Image.network(postItem.images[1]["link"], scale: 0.6)),
+          ],
         ),
       );
-    }
+    } else if (postItem.images.length == 3) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                        child: Image.network(postItem.images[0]["link"],
+                            scale: 0.6)),
+                    Expanded(
+                        child: Image.network(postItem.images[1]["link"],
+                            scale: 0.6)),
+                  ],
+                ),
+              ),
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  child: Image.network(postItem.images[1]["link"], scale: 0.6)),
+            ]),
+      );
+    } else if (postItem.images.length == 4) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: <
+            Widget>[
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child:
+                        Image.network(postItem.images[0]["link"], scale: 0.6)),
+                Expanded(
+                    child:
+                        Image.network(postItem.images[1]["link"], scale: 0.6)),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child:
+                        Image.network(postItem.images[2]["link"], scale: 0.6)),
+                Expanded(
+                    child:
+                        Image.network(postItem.images[3]["link"], scale: 0.6)),
+              ],
+            ),
+          ),
+        ]),
+      );
+    } else
+      return Container();
   }
 
   buildPostFooter(Post postItem) {
