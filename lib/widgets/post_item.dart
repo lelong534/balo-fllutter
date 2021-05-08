@@ -2,6 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:zalo/bloc/get_post_bloc.dart';
 import 'package:zalo/models/post.dart';
+import 'package:zalo/screens/post/image_screen.dart';
 import 'package:zalo/screens/post/post_detail.dart';
 
 class PostItem extends StatefulWidget {
@@ -90,16 +91,13 @@ class _PostItemState extends State<PostItem> {
     if (postItem.images.length == 0) {
       return Container();
     } else if (postItem.images.length == 1) {
-      return Container(
-          child: Image.network(postItem.images[0]["link"], scale: 0.6));
+      return Container(child: buildFullScreenImage(postItem.images[0]["link"]));
     } else if (postItem.images.length == 2) {
       return Container(
         child: Row(
           children: <Widget>[
-            Expanded(
-                child: Image.network(postItem.images[0]["link"], scale: 0.6)),
-            Expanded(
-                child: Image.network(postItem.images[1]["link"], scale: 0.6)),
+            Expanded(child: buildFullScreenImage(postItem.images[0]["link"])),
+            Expanded(child: buildFullScreenImage(postItem.images[1]["link"])),
           ],
         ),
       );
@@ -114,17 +112,17 @@ class _PostItemState extends State<PostItem> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
-                        child: Image.network(postItem.images[0]["link"],
-                            scale: 0.6)),
+                        child:
+                            buildFullScreenImage(postItem.images[0]["link"])),
                     Expanded(
-                        child: Image.network(postItem.images[1]["link"],
-                            scale: 0.6)),
+                        child:
+                            buildFullScreenImage(postItem.images[1]["link"])),
                   ],
                 ),
               ),
               Container(
                   height: MediaQuery.of(context).size.height * 0.3,
-                  child: Image.network(postItem.images[1]["link"], scale: 0.6)),
+                  child: buildFullScreenImage(postItem.images[2]["link"])),
             ]),
       );
     } else if (postItem.images.length == 4) {
@@ -137,11 +135,9 @@ class _PostItemState extends State<PostItem> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                    child:
-                        Image.network(postItem.images[0]["link"], scale: 0.6)),
+                    child: buildFullScreenImage(postItem.images[0]["link"])),
                 Expanded(
-                    child:
-                        Image.network(postItem.images[1]["link"], scale: 0.6)),
+                    child: buildFullScreenImage(postItem.images[1]["link"])),
               ],
             ),
           ),
@@ -150,11 +146,9 @@ class _PostItemState extends State<PostItem> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Expanded(
-                    child:
-                        Image.network(postItem.images[2]["link"], scale: 0.6)),
+                    child: buildFullScreenImage(postItem.images[2]["link"])),
                 Expanded(
-                    child:
-                        Image.network(postItem.images[3]["link"], scale: 0.6)),
+                    child: buildFullScreenImage(postItem.images[3]["link"])),
               ],
             ),
           ),
@@ -162,6 +156,23 @@ class _PostItemState extends State<PostItem> {
       );
     } else
       return Container();
+  }
+
+  buildFullScreenImage(url) {
+    return Padding(
+      padding: EdgeInsets.all(5),
+      child: GestureDetector(
+        child: Hero(
+          tag: url,
+          child: Image.network(url, scale: 0.5),
+        ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (_) {
+            return ImageScreen(url);
+          }));
+        },
+      ),
+    );
   }
 
   buildPostFooter(Post postItem) {

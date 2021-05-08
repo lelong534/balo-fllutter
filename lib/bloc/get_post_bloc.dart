@@ -18,14 +18,20 @@ class PostBloc {
 
   addPost(List<MultipartFile> images, File video, String described) async {
     await _repository.addPost(images, video, described);
+    PostResponse response = await _repository.getListPosts(0);
+    _subject.sink.add(response);
   }
 
   likePost(int postid) async {
     await _repository.likePost(postid);
+    PostResponse response = await _repository.getListPosts(0);
+    _subject.sink.add(response);
   }
 
   unLikePost(int postid) async {
     await _repository.unLikePost(postid);
+    PostResponse response = await _repository.getListPosts(0);
+    _subject.sink.add(response);
   }
 
   void dispose() async {
