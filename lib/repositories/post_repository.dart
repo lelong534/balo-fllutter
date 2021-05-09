@@ -16,11 +16,11 @@ class PostRepository {
 
   Future<PostResponse> getListPosts(int index) async {
     var token = await storage.read(key: "token");
-    var userId = await storage.read(key: "userId");
+    // var userId = await storage.read(key: "userId");
     try {
       Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        "user_id": userId,
+        // "user_id": userId,
         "index": index,
         "count": 20,
       });

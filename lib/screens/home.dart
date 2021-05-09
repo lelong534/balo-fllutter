@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/icon_data.dart';
 import 'package:flutter/material.dart';
 import 'chat.dart';
 import 'post.dart';

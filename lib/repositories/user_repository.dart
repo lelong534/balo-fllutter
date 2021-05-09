@@ -5,6 +5,7 @@ import 'package:zalo/models/user_response.dart';
 class UserRepository {
   static String mainUrl = "https://bk-zalo.herokuapp.com";
   var loginUrl = '$mainUrl/api/login';
+  var signUpUrl = '$mainUrl/api/signup';
   var getUserInfoUrl = '$mainUrl/api/user/get_user_info';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
@@ -40,6 +41,18 @@ class UserRepository {
     userLoginInfo.add(response.data["data"]["id"]);
 
     return userLoginInfo;
+  }
+
+  Future<void> signUp(String phonenumber, String password) async {
+    try {
+      Response response = await _dio.post(signUpUrl, data: {
+        "phone_number": phonenumber,
+        "password": password,
+      });
+      print(response);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+    }
   }
 
   Future<UserResponse> getUserInfo() async {

@@ -1,8 +1,10 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:zalo/bloc/login/login.dart';
 import 'package:zalo/repositories/user_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zalo/screens/signup.dart';
 
 class LoginForm extends StatefulWidget {
   final UserRepository userRepository;
@@ -19,6 +21,7 @@ class _LoginFormState extends State<LoginForm> {
   _LoginFormState(this.userRepository);
   final _phonenumberController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool isHidePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +99,36 @@ class _LoginFormState extends State<LoginForm> {
                       ),
                       TextFormField(
                         controller: _passwordController,
+                        obscureText: isHidePassword,
                         style: TextStyle(
                           fontSize: 13,
                         ),
                         decoration: InputDecoration(
-                          labelText: 'Mật khẩu',
-                        ),
+                            labelText: 'Mật khẩu',
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  isHidePassword = !isHidePassword;
+                                });
+                              },
+                              icon: Icon(EvaIcons.eyeOutline),
+                            )),
                       ),
                     ],
                   ),
                 ),
               ),
+              Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                    onPressed: () {
+                      return Navigator.pushNamed(context, Signup.routeName);
+                    },
+                    child: Text(
+                      "Chưa có tài khoản?",
+                      textAlign: TextAlign.right,
+                    )),
+              )
             ],
           ),
         );

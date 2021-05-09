@@ -13,6 +13,10 @@ class UserBloc {
     _subject.sink.add(response);
   }
 
+  signUp(phonenumber, password) async {
+    await _userRepository.signUp(phonenumber, password);
+  }
+
   void dispose() async {
     _subject.close();
   }

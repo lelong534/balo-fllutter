@@ -47,9 +47,13 @@ class _PostScreenState extends State<PostScreen> {
             padding: EdgeInsets.only(top: 14),
             child: Column(
               children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: NetworkImage(user.avatar),
-                ),
+                user.avatar != null
+                    ? CircleAvatar(
+                        backgroundImage: NetworkImage(user.avatar),
+                      )
+                    : CircleAvatar(
+                        backgroundImage: AssetImage('assets/avatar.png'),
+                      ),
               ],
             ),
           ),
@@ -61,7 +65,7 @@ class _PostScreenState extends State<PostScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 12),
                   child: Text(
-                    user.name,
+                    user.name != null ? user.name : "Người dùng",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

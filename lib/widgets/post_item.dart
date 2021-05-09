@@ -45,28 +45,27 @@ class _PostItemState extends State<PostItem> {
 
   buildPostHeader(Post postItem) {
     var avatarLink;
-    if (postItem.authorAvatar == null) {
-      avatarLink = "";
-      return Container();
-    } else {
-      avatarLink = postItem.authorAvatar;
-      return ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(avatarLink),
-        ),
-        title: GestureDetector(
-          onTap: () => print('showing profile'),
-          child: Text(
-            'Long Le',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
+    avatarLink = postItem.authorAvatar;
+    return ListTile(
+      leading: avatarLink != null
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(avatarLink),
+            )
+          : CircleAvatar(
+              backgroundImage: AssetImage('assets/avatar.png'),
             ),
+      title: GestureDetector(
+        onTap: () => print('showing profile'),
+        child: Text(
+          postItem.authorName != null ? postItem.authorName : "Người dùng",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text('3 giờ trước'),
-      );
-    }
+      ),
+      subtitle: Text('3 giờ trước'),
+    );
   }
 
   buildPostContent(Post postItem) {
