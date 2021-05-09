@@ -1,13 +1,13 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:zalo/bloc/get_post_bloc.dart';
+import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/models/post_response.dart';
 import 'package:zalo/models/user.dart';
 import 'package:zalo/models/user_response.dart';
 import 'package:zalo/widgets/post_item.dart';
 import 'package:zalo/widgets/search.dart';
-import 'package:zalo/bloc/get_user_bloc.dart';
+import 'package:zalo/bloc/user_bloc.dart';
 import 'post/add.dart';
 
 class PostScreen extends StatefulWidget {

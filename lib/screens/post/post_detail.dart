@@ -1,5 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:zalo/bloc/comment_bloc.dart';
+import 'package:zalo/models/comment.dart';
+import 'package:zalo/models/comment_response.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/screens/post/image_screen.dart';
 
@@ -37,6 +40,12 @@ class _PostDetailState extends State<PostDetail> {
     this.handleLikePostItem,
   );
 
+  @override
+  void initState() {
+    super.initState();
+    commentBloc..getListComments(0, postDetail.id);
+  }
+
   void handleLikePostDetail(Post postItem) {
     handleLikePostItem(postItem);
     if (isLikedByUser == false) {
@@ -52,7 +61,10 @@ class _PostDetailState extends State<PostDetail> {
     }
   }
 
-  void _handleSubmitComment(String text) {}
+  void _handleSubmitComment() {
+    commentBloc..addComment(_commentTextController.text, postDetail.id);
+    _commentTextController.clear();
+  }
 
   buildPostHeader(Post postDetail) {
     var avatarLink;
@@ -158,7 +170,7 @@ class _PostDetailState extends State<PostDetail> {
               children: <Widget>[
                 Expanded(
                     child: buildFullScreenImage(postItem.images[2]["link"])),
-                Expanded( 
+                Expanded(
                     child: buildFullScreenImage(postItem.images[3]["link"])),
               ],
             ),
@@ -220,6 +232,55 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
+  buildPostComment(Post postItem) {
+    return StreamBuilder<CommentResponse>(
+      stream: commentBloc.subject.stream,
+      builder: (context, AsyncSnapshot<CommentResponse> snapshot) {
+        if (snapshot.hasData) {
+          List<Comment> comments = snapshot.data.comments;
+          print(comments);
+          return ListView.builder(
+            itemCount: comments.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Column(children: <Widget>[
+                Container(
+                    height: 2,
+                    color: Colors.black12,
+                    width: MediaQuery.of(context).size.width * 0.9),
+                ListTile(
+                  leading: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: CircleAvatar(
+                      radius: 16,
+                      backgroundImage:
+                          NetworkImage(comments[index].authorAvatar),
+                    ),
+                  ),
+                  title: Text(
+                    comments[index].authorName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  subtitle: Text(
+                    comments[index].content,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ]);
+            },
+          );
+        }
+        return Container();
+      },
+    );
+  }
+
   buildComment() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -235,10 +296,9 @@ class _PostDetailState extends State<PostDetail> {
                 padding: EdgeInsets.fromLTRB(20, 10, 0, 10),
                 child: TextField(
                   controller: _commentTextController,
-                  onSubmitted: _handleSubmitComment,
                   style: TextStyle(fontSize: 18),
                   decoration:
-                      InputDecoration.collapsed(hintText: "Cảm nghĩ của bạn"),
+                      InputDecoration.collapsed(hintText: "Nhập bình luận"),
                 ),
               ),
             ),
@@ -248,7 +308,7 @@ class _PostDetailState extends State<PostDetail> {
                   EvaIcons.navigation2,
                   color: Colors.blue,
                 ),
-                onPressed: () {},
+                onPressed: _handleSubmitComment,
               ),
             )
           ],
@@ -268,11 +328,13 @@ class _PostDetailState extends State<PostDetail> {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   buildPostHeader(postDetail),
                   buildPostContent(postDetail),
                   buildPostImage(postDetail),
                   buildPostFooter(postDetail),
+                  buildPostComment(postDetail),
                 ],
               ),
             ),

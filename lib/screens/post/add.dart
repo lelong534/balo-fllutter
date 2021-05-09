@@ -4,9 +4,12 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zalo/bloc/get_post_bloc.dart';
+import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/user.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:zalo/screens/home.dart';
+import 'package:zalo/screens/post.dart';
+import 'package:zalo/screens/welcome.dart';
 
 class AddPost extends StatefulWidget {
   static String routeName = 'addPost';
@@ -96,6 +99,7 @@ class _AddPostState extends State<AddPost> {
 
   void _submitAddPostForm() {
     postBloc..addPost(imagesFile, video, _describedController.text);
+    Navigator.pushNamed(context, Message.routeName);
   }
 
   clearImage() {

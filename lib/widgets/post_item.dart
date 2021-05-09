@@ -1,6 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:zalo/bloc/get_post_bloc.dart';
+import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/screens/post/image_screen.dart';
 import 'package:zalo/screens/post/post_detail.dart';
