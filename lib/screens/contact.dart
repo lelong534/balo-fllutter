@@ -1,6 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:zalo/widgets/search.dart';
 
 class Contact extends StatefulWidget {
   @override
@@ -11,40 +10,33 @@ class _ContactState extends State<Contact> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: <Color>[Colors.blue, Colors.blue[300]],
+      body: Column(
+        children: <Widget>[
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+              shadowColor: Colors.white12,
             ),
-          ),
-        ),
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: <Widget>[
-            Icon(EvaIcons.searchOutline),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: TextField(
-                readOnly: true,
-                decoration: InputDecoration(
-                  hintText: "Tìm kiếm bạn bè, tin nhắn ...",
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.6),
+            onPressed: () {
+              print("tap");
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.blue,
+                    child: Icon(EvaIcons.peopleOutline, color: Colors.white),
                   ),
-                  border: InputBorder.none,
-                ),
-                onTap: () {
-                  showSearch(context: context, delegate: Search());
-                },
+                  SizedBox(width: 20),
+                  Text("Lời mời kết bạn",
+                      style: TextStyle(color: Colors.black, fontSize: 16))
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

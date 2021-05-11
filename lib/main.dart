@@ -6,7 +6,6 @@ import 'repositories/user_repository.dart';
 
 import 'routes.dart';
 import 'screens/welcome.dart';
-import 'screens/login.dart';
 import 'screens/home.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {

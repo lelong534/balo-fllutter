@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/post.dart';
@@ -6,9 +5,9 @@ import 'package:zalo/models/post_response.dart';
 import 'package:zalo/models/user.dart';
 import 'package:zalo/models/user_response.dart';
 import 'package:zalo/widgets/post_item.dart';
-import 'package:zalo/widgets/search.dart';
 import 'package:zalo/bloc/user_bloc.dart';
 import 'post/add.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class PostScreen extends StatefulWidget {
   @override
@@ -49,8 +48,7 @@ class _PostScreenState extends State<PostScreen> {
               children: <Widget>[
                 user.avatar != null
                     ? CircleAvatar(
-                        backgroundImage: NetworkImage(user.avatar),
-                      )
+                        backgroundImage: NetworkImage(user.avatar, scale: 0.1))
                     : CircleAvatar(
                         backgroundImage: AssetImage('assets/avatar.png'),
                       ),
@@ -125,41 +123,6 @@ class _PostScreenState extends State<PostScreen> {
           User user = snapshot.data.user;
           return Scaffold(
             backgroundColor: Colors.grey[300],
-            appBar: AppBar(
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[Colors.blue, Colors.blue[300]],
-                  ),
-                ),
-              ),
-              automaticallyImplyLeading: false,
-              title: Row(
-                children: <Widget>[
-                  Icon(EvaIcons.searchOutline),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: TextField(
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        hintText: "Tìm kiếm bạn bè, tin nhắn ...",
-                        hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.6),
-                        ),
-                        border: InputBorder.none,
-                      ),
-                      onTap: () {
-                        showSearch(context: context, delegate: Search());
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
             body: Column(
               children: <Widget>[
                 Expanded(child: buildPostAddition(user), flex: 1),

@@ -1,0 +1,19 @@
+import 'package:zalo/models/comment.dart';
+import 'package:zalo/models/friend.dart';
+
+class FriendResponse {
+  final List<Friend> friends;
+  final String error;
+
+  FriendResponse(this.friends, this.error);
+
+  FriendResponse.fromJson(Map<String, dynamic> json)
+      : friends = (json["data"]["frineds"] as List)
+            .map((i) => new Friend.fromJson(i))
+            .toList(),
+        error = "";
+
+  FriendResponse.withError(String errorValue)
+      : friends = [],
+        error = errorValue;
+}
