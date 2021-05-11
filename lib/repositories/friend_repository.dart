@@ -4,7 +4,7 @@ import 'package:zalo/models/friend_response.dart';
 
 class FriendRepository {
   static String mainUrl = "https://bk-zalo.herokuapp.com";
-  var getListFriendsUrl = '$mainUrl/api/user/get_user_friend';
+  var getListFriendsUrl = '$mainUrl/api/user/get_user_friends';
   var addCommentUrl = '$mainUrl/api/add_comment';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();

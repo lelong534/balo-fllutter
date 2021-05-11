@@ -7,8 +7,8 @@ class FriendBloc {
   final BehaviorSubject<FriendResponse> _subject =
       BehaviorSubject<FriendResponse>();
 
-  getListFriends(int index, int postid) async {
-    FriendResponse response = await _repository.getListFriends(index, postid);
+  getListFriends(int index, int count) async {
+    FriendResponse response = await _repository.getListFriends(index, count);
     print(response);
     _subject.sink.add(response);
   }

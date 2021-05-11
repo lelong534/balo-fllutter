@@ -1,4 +1,3 @@
-import 'package:zalo/models/comment.dart';
 import 'package:zalo/models/friend.dart';
 
 class FriendResponse {
@@ -8,7 +7,7 @@ class FriendResponse {
   FriendResponse(this.friends, this.error);
 
   FriendResponse.fromJson(Map<String, dynamic> json)
-      : friends = (json["data"]["frineds"] as List)
+      : friends = (json["data"]["friends"] as List)
             .map((i) => new Friend.fromJson(i))
             .toList(),
         error = "";
