@@ -105,8 +105,7 @@ class _ContactState extends State<Contact> {
         child: Row(
           children: <Widget>[
             friend.avatar != null
-                ? CircleAvatar(
-                    radius: 25, backgroundImage: NetworkImage(friend.avatar))
+                ? CircleAvatar(backgroundImage: NetworkImage(friend.avatar))
                 : CircleAvatar(child: Text("U")),
             SizedBox(width: 20),
             Text(friend.username != null ? friend.username : "Người dùng",

@@ -249,15 +249,20 @@ class _PostDetailState extends State<PostDetail> {
                     width: MediaQuery.of(context).size.width * 0.9),
                 ListTile(
                   leading: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: CircleAvatar(
-                      radius: 16,
-                      backgroundImage:
-                          NetworkImage(comments[index].authorAvatar),
-                    ),
-                  ),
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: comments[index].authorAvatar != null
+                          ? CircleAvatar(
+                              radius: 16,
+                              backgroundImage:
+                                  NetworkImage(comments[index].authorAvatar))
+                          : CircleAvatar(
+                              radius: 16,
+                              child: Text("U"),
+                            )),
                   title: Text(
-                    comments[index].authorName,
+                    comments[index].authorName != null
+                        ? comments[index].authorName
+                        : "Người dùng",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
