@@ -80,10 +80,10 @@ class _MessageState extends State<Message> {
             icon: Icon(EvaIcons.globe2Outline),
             label: 'Danh bạ',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(EvaIcons.peopleOutline),
-            label: 'Nhóm',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(EvaIcons.peopleOutline),
+          //   label: 'Nhóm',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(EvaIcons.calendarOutline),
             label: 'Nhật ký',
@@ -112,7 +112,7 @@ class _MessageState extends State<Message> {
         children: <Widget>[
           Chat(),
           Contact(),
-          Group(),
+          // Group(),
           PostScreen(),
           More(),
         ],

@@ -131,11 +131,5 @@ class _PostScreenState extends State<PostScreen> {
         ],
       ),
     );
-    //     ),
-    //   );
-    // }
-    // return _buildPostLoading();
-    //   },
-    // );
   }
 }

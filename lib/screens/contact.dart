@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:zalo/bloc/friend_bloc.dart';
 import 'package:zalo/models/friend.dart';
 import 'package:zalo/models/friend_response.dart';
+import 'package:zalo/screens/friend_request.dart';
 
 class Contact extends StatefulWidget {
+  static String routeName = "contact";
   @override
   _ContactState createState() => _ContactState();
 }
@@ -39,7 +41,11 @@ class _ContactState extends State<Contact> {
               }),
             ),
             onPressed: () {
-              print("tap");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => new FriendRequestScreen()),
+              );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
@@ -68,23 +74,21 @@ class _ContactState extends State<Contact> {
               ),
             ),
           ),
-          Expanded(
-            child: StreamBuilder<FriendResponse>(
-              stream: friendBloc.subject.stream,
-              builder: (context, AsyncSnapshot<FriendResponse> snapshot) {
-                if (snapshot.hasData) {
-                  List<Friend> friends = snapshot.data.friends;
-                  return ListView.builder(
-                    itemCount: friends.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return _buildFriendItem(friends[index]);
-                    },
-                  );
-                }
-                return Container();
-              },
-            ),
+          StreamBuilder<FriendResponse>(
+            stream: friendBloc.subject.stream,
+            builder: (context, AsyncSnapshot<FriendResponse> snapshot) {
+              if (snapshot.hasData) {
+                List<Friend> friends = snapshot.data.friends;
+                return ListView.builder(
+                  itemCount: friends.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return _buildFriendItem(friends[index]);
+                  },
+                );
+              }
+              return Container();
+            },
           ),
         ],
       ),

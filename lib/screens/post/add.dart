@@ -8,8 +8,6 @@ import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/user.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:zalo/screens/home.dart';
-import 'package:zalo/screens/post.dart';
-import 'package:zalo/screens/welcome.dart';
 
 class AddPost extends StatefulWidget {
   static String routeName = 'addPost';
