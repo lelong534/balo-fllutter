@@ -1,12 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:zalo/screens/search/discovery/list_discovery.dart';
 
 class Search extends SearchDelegate {
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
+      // IconButton(
+      //   icon: Icon(EvaIcons.searchOutline),
+      //   onPressed: () {},
+      // ),
       IconButton(
-        icon: Icon(EvaIcons.searchOutline),
+        icon: Icon(FontAwesomeIcons.qrcode),
         onPressed: () {},
       )
     ];
@@ -31,6 +38,8 @@ class Search extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    return Container(
+      child: ListDicovery(),
+    );
   }
 }

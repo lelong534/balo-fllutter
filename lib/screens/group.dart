@@ -43,6 +43,7 @@ class _GroupState extends State<Group> {
                 },
               ),
             ),
+            Icon(EvaIcons.plusOutline),
           ],
         ),
       ),

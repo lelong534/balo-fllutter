@@ -29,6 +29,7 @@ class _ContactState extends State<Contact> {
               width: 20,
             ),
             Expanded(
+
               child: TextField(
                 readOnly: true,
                 decoration: InputDecoration(
@@ -37,12 +38,16 @@ class _ContactState extends State<Contact> {
                     color: Colors.white.withOpacity(0.6),
                   ),
                   border: InputBorder.none,
+
                 ),
                 onTap: () {
                   showSearch(context: context, delegate: Search());
                 },
               ),
+
             ),
+            Icon(EvaIcons.personAddOutline),
+
           ],
         ),
       ),

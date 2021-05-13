@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:zalo/widgets/search.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Chat extends StatefulWidget {
   @override
@@ -43,6 +44,12 @@ class _ChatState extends State<Chat> {
                 },
               ),
             ),
+            Icon(FontAwesomeIcons.qrcode),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(EvaIcons.plusOutline),
+
           ],
         ),
       ),
