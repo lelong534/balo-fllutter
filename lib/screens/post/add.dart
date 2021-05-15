@@ -97,12 +97,14 @@ class _AddPostState extends State<AddPost> {
 
   void _submitAddPostForm() {
     postBloc..addPost(imagesFile, video, _describedController.text);
-    Navigator.pushNamed(context, Message.routeName);
+    // postBloc..getListPosts(0);
+    // Navigator.pushNamed(context, Message.routeName);
   }
 
   clearImage() {
     setState(() {
       imagesFile = null;
+      postBloc..drainStream();
       Navigator.pop(context);
     });
   }

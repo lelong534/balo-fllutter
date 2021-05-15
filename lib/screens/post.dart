@@ -22,6 +22,12 @@ class _PostScreenState extends State<PostScreen> {
     postBloc..getListPosts(index);
   }
 
+  @override
+  void dispose() {
+    postBloc..drainStream();
+    super.dispose();
+  }
+
   void handleLikePostItem(Post postItem) {
     if (postItem.isLiked == false) {
       postBloc..likePost(postItem.id);
@@ -94,7 +100,22 @@ class _PostScreenState extends State<PostScreen> {
             ),
           );
         } else
-          return Container();
+          return Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 25.0,
+                  width: 25.0,
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                    strokeWidth: 4.0,
+                  ),
+                )
+              ],
+            ),
+          );
       },
     );
   }

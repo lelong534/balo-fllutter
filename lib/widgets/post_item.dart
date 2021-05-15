@@ -5,6 +5,8 @@ import 'package:zalo/models/post.dart';
 import 'package:zalo/screens/post/image_screen.dart';
 import 'package:zalo/screens/post/post_detail.dart';
 
+import 'action_widget.dart';
+
 class PostItem extends StatefulWidget {
   final Post postItem;
   PostItem({Key key, this.postItem}) : super(key: key);
@@ -65,6 +67,14 @@ class _PostItemState extends State<PostItem> {
         ),
       ),
       subtitle: Text('3 giờ trước'),
+      trailing: IconButton(
+        icon: Icon(EvaIcons.moreVerticalOutline),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) => ActionWidget(postid: postItem.id));
+        },
+      ),
     );
   }
 

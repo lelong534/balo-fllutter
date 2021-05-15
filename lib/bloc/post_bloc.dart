@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:zalo/models/post_response.dart';
 import 'package:zalo/repositories/post_repository.dart';
@@ -34,7 +35,19 @@ class PostBloc {
     _subject.sink.add(response);
   }
 
+  deletePost(int postid) async {
+    await _repository.deletePost(postid);
+    PostResponse response = await _repository.getListPosts(0);
+    _subject.sink.add(response);
+  }
+
+  void drainStream() {
+    _subject.value = null;
+  }
+
+  @mustCallSuper
   void dispose() async {
+    await _subject.drain();
     _subject.close();
   }
 
