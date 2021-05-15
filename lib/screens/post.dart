@@ -101,19 +101,16 @@ class _PostScreenState extends State<PostScreen> {
           );
         } else
           return Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 25.0,
-                  width: 25.0,
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-                    strokeWidth: 4.0,
-                  ),
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                height: 25.0,
+                width: 25.0,
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+                  strokeWidth: 4.0,
+                ),
+              ),
             ),
           );
       },

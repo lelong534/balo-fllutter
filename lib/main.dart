@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           if (state is AuthenticationLoading) {
             return Scaffold(
               body: Container(
-                color: Colors.white,
+                color: Colors.black,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,6 +83,11 @@ class MyApp extends StatelessWidget {
                             new AlwaysStoppedAnimation<Color>(Colors.blue),
                         strokeWidth: 4.0,
                       ),
+                    ),
+                    SizedBox(height: 25),
+                    Text(
+                      'Đang chờ đăng nhập...',
+                      style: TextStyle(color: Colors.black),
                     )
                   ],
                 ),
@@ -105,7 +110,8 @@ class MyApp extends StatelessWidget {
                           new AlwaysStoppedAnimation<Color>(Colors.blue),
                       strokeWidth: 4.0,
                     ),
-                  )
+                  ),
+                  SizedBox(height: 25),
                 ],
               ),
             ),
