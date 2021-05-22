@@ -104,7 +104,7 @@ class _AddPostState extends State<AddPost> {
   clearImage() {
     setState(() {
       imagesFile = null;
-      postBloc..drainStream();
+      // postBloc..drainStream();
       Navigator.pop(context);
     });
   }

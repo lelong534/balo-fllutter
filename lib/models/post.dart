@@ -4,7 +4,7 @@ class Post {
   final List images;
   final String video;
   final int like;
-  // final int comment;
+  final int comment;
   final String created;
   final bool isLiked;
   // final String isHidden;
@@ -18,7 +18,7 @@ class Post {
     this.images,
     this.video,
     this.like,
-    // this.comment,
+    this.comment,
     this.created,
     this.isLiked,
     // this.isHidden,
@@ -33,7 +33,7 @@ class Post {
         images = json["images"],
         video = json["video"],
         like = json["like"],
-        // comment = json["comment"],
+        comment = json["comment"],
         created = json["created"],
         isLiked = json["isLiked"],
         // isHidden = json["is_hidden"],

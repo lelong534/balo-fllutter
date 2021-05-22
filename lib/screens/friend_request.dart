@@ -47,7 +47,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                   borderRadius: BorderRadius.circular(30.0))),
               backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
-                return Colors.teal[100];
+                return Colors.blue[200];
               }),
             ),
           ),
@@ -118,7 +118,7 @@ class _FriendRequestScreenState extends State<FriendRequestScreen> {
                       borderRadius: BorderRadius.circular(30.0))),
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
                       (Set<MaterialState> states) {
-                    return Colors.white;
+                    return Colors.lightBlue[200];
                   }),
                 ),
               ),

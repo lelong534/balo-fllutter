@@ -9,27 +9,33 @@ import 'package:zalo/screens/post/image_screen.dart';
 class PostDetail extends StatefulWidget {
   final Post postDetail;
   final Function handleLikePostItem;
+  final Function commentPost;
   final bool isLikedByUser;
   final int countLikes;
+  final int countComments;
 
-  PostDetail(
-      {Key key,
-      this.postDetail,
-      this.isLikedByUser,
-      this.countLikes,
-      this.handleLikePostItem})
-      : super(key: key);
+  PostDetail({
+    Key key,
+    this.postDetail,
+    this.isLikedByUser,
+    this.countLikes,
+    this.countComments,
+    this.handleLikePostItem,
+    this.commentPost,
+  }) : super(key: key);
 
   @override
-  _PostDetailState createState() => _PostDetailState(
-      postDetail, isLikedByUser, countLikes, handleLikePostItem);
+  _PostDetailState createState() => _PostDetailState(postDetail, isLikedByUser,
+      countLikes, countComments, handleLikePostItem, commentPost);
 }
 
 class _PostDetailState extends State<PostDetail> {
   final Post postDetail;
   final Function handleLikePostItem;
+  final Function commentPost;
   bool isLikedByUser;
   int countLikes;
+  int countComments;
   final TextEditingController _commentTextController =
       new TextEditingController();
 
@@ -37,7 +43,9 @@ class _PostDetailState extends State<PostDetail> {
     this.postDetail,
     this.isLikedByUser,
     this.countLikes,
+    this.countComments,
     this.handleLikePostItem,
+    this.commentPost,
   );
 
   @override
@@ -61,8 +69,11 @@ class _PostDetailState extends State<PostDetail> {
     }
   }
 
-  void _handleSubmitComment() {
-    commentBloc..addComment(_commentTextController.text, postDetail.id);
+  void handleSubmitComment(Post postItem) {
+    commentPost(_commentTextController.text, postItem);
+    setState(() {
+      countComments++;
+    });
     _commentTextController.clear();
   }
 
@@ -224,7 +235,7 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
             Padding(padding: EdgeInsets.only(right: 5.0)),
-            Text('2'),
+            Text(countComments.toString()),
           ],
         ),
       ],
@@ -285,7 +296,7 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 
-  buildComment() {
+  buildComment(Post postItem) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
@@ -312,7 +323,9 @@ class _PostDetailState extends State<PostDetail> {
                   EvaIcons.navigation2,
                   color: Colors.blue,
                 ),
-                onPressed: _handleSubmitComment,
+                onPressed: () {
+                  handleSubmitComment(postItem);
+                },
               ),
             )
           ],
@@ -343,7 +356,7 @@ class _PostDetailState extends State<PostDetail> {
               ),
             ),
           ),
-          buildComment(),
+          buildComment(postDetail),
           SizedBox(height: 14),
         ],
       ),

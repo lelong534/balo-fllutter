@@ -44,7 +44,7 @@ class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
                   borderRadius: BorderRadius.circular(30.0))),
               backgroundColor: MaterialStateProperty.resolveWith<Color>(
                   (Set<MaterialState> states) {
-                return Colors.teal[100];
+                return Colors.blue[200];
               }),
             ),
           ),

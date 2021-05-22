@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:zalo/bloc/comment_bloc.dart';
 import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/screens/post/image_screen.dart';
@@ -19,11 +20,13 @@ class _PostItemState extends State<PostItem> {
   final Post postItem;
   bool isLikedByUser;
   int countLikes;
+  int countComments;
 
   @override
   void initState() {
     isLikedByUser = postItem.isLiked;
     countLikes = postItem.like;
+    countComments = postItem.comment;
     super.initState();
   }
 
@@ -43,6 +46,13 @@ class _PostItemState extends State<PostItem> {
       });
       postBloc..unLikePost(postItem.id);
     }
+  }
+
+  void commentPost(String comment, Post postItem) {
+    commentBloc..addComment(comment, postItem.id);
+    setState(() {
+      countComments++;
+    });
   }
 
   buildPostHeader(Post postItem) {
@@ -173,7 +183,10 @@ class _PostItemState extends State<PostItem> {
       child: GestureDetector(
         child: Hero(
           tag: url,
-          child: Image.network(url, scale: 0.5),
+          child: Image.network(
+            url,
+            scale: 0.5,
+          ),
         ),
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -210,6 +223,8 @@ class _PostItemState extends State<PostItem> {
                     postDetail: postItem,
                     isLikedByUser: isLikedByUser,
                     countLikes: countLikes,
+                    countComments: countComments,
+                    commentPost: commentPost,
                     handleLikePostItem: handleLikePostItem,
                   ),
                 ),
@@ -220,7 +235,7 @@ class _PostItemState extends State<PostItem> {
               ),
             ),
             Padding(padding: EdgeInsets.only(right: 5.0)),
-            Text('2'),
+            Text(countComments.toString()),
           ],
         ),
       ],
