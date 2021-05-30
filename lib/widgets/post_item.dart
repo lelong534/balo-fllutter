@@ -5,6 +5,7 @@ import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/screens/post/image_screen.dart';
 import 'package:zalo/screens/post/post_detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'action_widget.dart';
 
@@ -181,12 +182,16 @@ class _PostItemState extends State<PostItem> {
     return Padding(
       padding: EdgeInsets.all(5),
       child: GestureDetector(
-        child: Hero(
-          tag: url,
-          child: Image.network(
-            url,
-            scale: 0.5,
-          ),
+        // child: Hero(
+        //   tag: url,
+        //   child: Image.network(
+        //     url,
+        //     scale: 0.5,
+        //   ),
+        // ),
+        child: CachedNetworkImage(
+          placeholder: (context, url) => CircularProgressIndicator(),
+          imageUrl: url,
         ),
         onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (_) {
