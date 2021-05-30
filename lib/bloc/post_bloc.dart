@@ -51,7 +51,7 @@ class PostBloc {
     _subject.close();
   }
 
-  BehaviorSubject<PostResponse> get subject => _subject;
+  BehaviorSubject<PostResponse> get subject => _subject.stream;
 }
 
 final postBloc = PostBloc();

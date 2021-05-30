@@ -9,7 +9,7 @@ class ActionWidget extends StatelessWidget {
 
   void deletePost(int postid) {
     postBloc..deletePost(postid);
-    postBloc..drainStream();
+    // postBloc..drainStream();
   }
 
   @override

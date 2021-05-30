@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:zalo/bloc/post_bloc.dart';
 import 'package:zalo/models/user.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:zalo/screens/home.dart';
 
 class AddPost extends StatefulWidget {
   static String routeName = 'addPost';
