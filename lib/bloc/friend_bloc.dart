@@ -9,7 +9,6 @@ class FriendBloc {
 
   getListFriends(int index, int count) async {
     FriendResponse response = await _repository.getListFriends(index, count);
-    print(response);
     _subject.sink.add(response);
   }
 

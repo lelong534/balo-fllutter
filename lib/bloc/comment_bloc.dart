@@ -9,7 +9,6 @@ class CommentBloc {
 
   getListComments(int index, int postid) async {
     CommentResponse response = await _repository.getListComments(index, postid);
-    print(response);
     _subject.sink.add(response);
   }
 

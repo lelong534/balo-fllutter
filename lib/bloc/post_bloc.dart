@@ -13,7 +13,6 @@ class PostBloc {
 
   getListPosts(int index) async {
     PostResponse response = await _repository.getListPosts(index);
-    print(response);
     _subject.sink.add(response);
   }
 

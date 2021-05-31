@@ -10,7 +10,6 @@ class FriendRequestBloc {
   getListFriends(int index, int count) async {
     FriendRequestResponse response =
         await _repository.getListFriendRequest(index, count);
-    print(response);
     _subject.sink.add(response);
   }
 

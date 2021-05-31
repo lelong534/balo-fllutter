@@ -9,7 +9,6 @@ class UserBloc {
 
   getUser() async {
     UserResponse response = await _userRepository.getUserInfo();
-    print(response);
     _subject.sink.add(response);
   }
 

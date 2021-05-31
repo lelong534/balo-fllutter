@@ -10,7 +10,6 @@ class FriendSuggestBloc {
   getListSuggests(int index, int count) async {
     FriendSuggestResponse response =
         await _repository.getListSuggestRequest(index, count);
-    print(response);
     _subject.sink.add(response);
   }
 

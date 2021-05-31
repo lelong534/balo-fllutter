@@ -22,11 +22,11 @@ class _PostScreenState extends State<PostScreen> {
     postBloc..getListPosts(index);
   }
 
-  @override
-  void dispose() {
-    postBloc..drainStream();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   postBloc..drainStream();
+  //   super.dispose();
+  // }
 
   void handleLikePostItem(Post postItem) {
     if (postItem.isLiked == false) {
