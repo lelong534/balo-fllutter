@@ -4,16 +4,12 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:zalo/bloc/post_bloc.dart';
-import 'package:zalo/models/user.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class AddPost extends StatefulWidget {
-  static String routeName = 'addPost';
+  final Function onSave;
 
-  final User currentUser;
-
-  AddPost({this.currentUser});
+  AddPost({Key key, @required this.onSave}) : super(key: key);
 
   @override
   _AddPostState createState() => _AddPostState();
@@ -25,11 +21,6 @@ class _AddPostState extends State<AddPost> {
   String errorText;
   final _describedController = TextEditingController();
   List<MultipartFile> imagesFile = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Widget buildGridView() {
     if (imagesAsset != null)
@@ -94,16 +85,9 @@ class _AddPostState extends State<AddPost> {
     });
   }
 
-  void _submitAddPostForm() {
-    postBloc..addPost(imagesFile, video, _describedController.text);
-    // postBloc..getListPosts(0);
-    // Navigator.pushNamed(context, Message.routeName);
-  }
-
   clearImage() {
     setState(() {
       imagesFile = null;
-      // postBloc..drainStream();
       Navigator.pop(context);
     });
   }
@@ -123,7 +107,10 @@ class _AddPostState extends State<AddPost> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextButton(
-              onPressed: _submitAddPostForm,
+              onPressed: () {
+                widget.onSave(imagesFile, video, _describedController.text);
+                Navigator.pop(context);
+              },
               child: Text(
                 'ĐĂNG',
                 style: TextStyle(

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zalo/models/comment_response.dart';
@@ -21,7 +19,6 @@ class CommentRepository {
         "index": index,
         "count": 20,
       });
-      print(response);
       return CommentResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -29,7 +26,7 @@ class CommentRepository {
     }
   }
 
-  Future<void> addComment(String content, int postid) async {
+  Future<CommentResponse> addComment(String content, int postid) async {
     var token = await storage.read(key: "token");
 
     try {
@@ -38,11 +35,18 @@ class CommentRepository {
         "id": postid,
         "content": content,
       });
-      Response response = await _dio.post(addCommentUrl, data: formData);
+      await _dio.post(addCommentUrl, data: formData);
 
-      print(response);
+      Response response = await _dio.post(getListCommentsUrl, data: {
+        "token": token,
+        "id": postid,
+        "index": 0,
+        "count": 20,
+      });
+      return CommentResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
+      return CommentResponse.withError("$error");
     }
   }
 }

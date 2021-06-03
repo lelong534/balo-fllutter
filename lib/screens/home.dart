@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:zalo/screens/post/posts.dart';
 import 'package:zalo/widgets/search.dart';
 import 'chat.dart';
-import 'post.dart';
-import 'group.dart';
 import 'contact.dart';
 import 'more.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -109,7 +108,8 @@ class _MessageState extends State<Message> {
           Chat(),
           Contact(),
           // Group(),
-          PostScreen(),
+          // PostScreen(),
+          PostNew(),
           More(),
         ],
       ),

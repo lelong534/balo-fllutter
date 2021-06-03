@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:zalo/models/post.dart';
 import 'package:zalo/models/post_response.dart';
 
 class PostRepository {
@@ -25,7 +26,6 @@ class PostRepository {
         "index": index,
         "count": 20,
       });
-      print(response);
       return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -33,7 +33,7 @@ class PostRepository {
     }
   }
 
-  Future<void> addPost(
+  Future<PostResponse> addPost(
       List<MultipartFile> images, File video, String described) async {
     var token = await storage.read(key: "token");
 
@@ -44,38 +44,59 @@ class PostRepository {
         "video": video,
         "described": described,
       });
-      Response response = await _dio.post(addPostUrl, data: formData);
+      await _dio.post(addPostUrl, data: formData);
 
-      print(response);
-    } catch (error, stacktrace) {
-      print("Exception occured: $error stackTrace: $stacktrace");
-    }
-  }
-
-  Future<void> likePost(int postid) async {
-    var token = await storage.read(key: "token");
-
-    try {
-      Response response = await _dio.post(likePostUrl, data: {
+      Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        "id": postid,
+        // "user_id": userId,
+        "index": 0,
+        "count": 20,
       });
-      print(response);
+      return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return PostResponse.withError("$error");
     }
   }
 
-  Future<void> unLikePost(int postid) async {
+  Future<PostResponse> likePost(Post post) async {
     var token = await storage.read(key: "token");
 
     try {
-      Response response = await _dio.post(unLikePostUrl, data: {
+      await _dio.post(likePostUrl, data: {
         "token": token,
-        "id": postid,
+        "id": post.id,
       });
-      print(response);
+
+      Response response = await _dio.post(getListPostsUrl, data: {
+        "token": token,
+        // "user_id": userId,
+        "index": 0,
+        "count": 20,
+      });
+      return PostResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return PostResponse.withError("$error");
+    }
+  }
+
+  Future<PostResponse> unLikePost(Post post) async {
+    var token = await storage.read(key: "token");
+
+    try {
+      await _dio.post(unLikePostUrl, data: {
+        "token": token,
+        "id": post.id,
+      });
+
+      Response response = await _dio.post(getListPostsUrl, data: {
+        "token": token,
+        // "user_id": userId,
+        "index": 0,
+        "count": 20,
+      });
+      return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return PostResponse.withError("$error");
