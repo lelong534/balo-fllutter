@@ -107,8 +107,6 @@ class _MessageState extends State<Message> {
         children: <Widget>[
           Chat(),
           Contact(),
-          // Group(),
-          // PostScreen(),
           PostNew(),
           More(),
         ],

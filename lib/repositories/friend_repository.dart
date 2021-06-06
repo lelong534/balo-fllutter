@@ -41,9 +41,7 @@ class FriendRepository {
         "id": postid,
         "content": content,
       });
-      Response response = await _dio.post(addCommentUrl, data: formData);
-
-      print(response);
+      await _dio.post(addCommentUrl, data: formData);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
     }
@@ -58,7 +56,6 @@ class FriendRepository {
         "index": index,
         "count": count,
       });
-      print(response);
       return FriendRequestResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -75,7 +72,6 @@ class FriendRepository {
         "index": index,
         "count": count,
       });
-      print(response);
       return FriendSuggestResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
@@ -83,7 +79,7 @@ class FriendRepository {
     }
   }
 
-  Future<void> acceptFriend(int userid, int status) async {
+  Future<FriendRequestResponse> acceptFriend(int userid, int status) async {
     var token = await storage.read(key: "token");
 
     try {
@@ -92,15 +88,20 @@ class FriendRepository {
         "user_id": userid,
         "is_accepted": status,
       });
-      Response response = await _dio.post(setAcceptFriend, data: formData);
-
-      print(response);
+      await _dio.post(setAcceptFriend, data: formData);
+      Response response = await _dio.post(getListFriendRequestUrl, data: {
+        "token": token,
+        "index": 0,
+        "count": 20,
+      });
+      return FriendRequestResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
+      return FriendRequestResponse.withError("$error");
     }
   }
 
-  Future<void> rejectFriend(int userid) async {
+  Future<FriendRequestResponse> rejectFriend(int userid) async {
     var token = await storage.read(key: "token");
 
     try {
@@ -109,15 +110,21 @@ class FriendRepository {
         "user_id": userid,
         "is_accepted": 0,
       });
-      Response response = await _dio.post(setAcceptFriend, data: formData);
+      await _dio.post(setAcceptFriend, data: formData);
 
-      print(response);
+      Response response = await _dio.post(getListFriendRequestUrl, data: {
+        "token": token,
+        "index": 0,
+        "count": 20,
+      });
+      return FriendRequestResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
+      return FriendRequestResponse.withError("$error");
     }
   }
 
-  Future<void> requestFriend(int userid) async {
+  Future<FriendSuggestResponse> requestFriend(int userid) async {
     var token = await storage.read(key: "token");
 
     try {
@@ -125,11 +132,16 @@ class FriendRepository {
         "token": token,
         "user_id": userid,
       });
-      Response response = await _dio.post(setRequestFriendUrl, data: formData);
-
-      print(response);
+      await _dio.post(setRequestFriendUrl, data: formData);
+      Response response = await _dio.post(getListFriendSuggestUrl, data: {
+        "token": token,
+        "index": 0,
+        "count": 20,
+      });
+      return FriendSuggestResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
+      return FriendSuggestResponse.withError("$error");
     }
   }
 }

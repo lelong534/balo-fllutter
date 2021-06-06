@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:alert/alert.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,7 @@ class _AddPostState extends State<AddPost> {
         }),
       );
     else
-      return Container(color: Colors.white);
+      return Container();
   }
 
   Future<void> loadAssets() async {
@@ -66,16 +67,18 @@ class _AddPostState extends State<AddPost> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    for (var asset in resultList) {
-      ByteData byteData = await asset.getByteData(quality: 80);
+    if (resultList != null) {
+      for (var asset in resultList) {
+        ByteData byteData = await asset.getByteData(quality: 80);
 
-      if (byteData != null) {
-        List<int> imageData = byteData.buffer.asUint8List();
-        MultipartFile multipartFile = MultipartFile.fromBytes(
-          imageData,
-          filename: 'test.jpg',
-        );
-        imagesFile.add(multipartFile);
+        if (byteData != null) {
+          List<int> imageData = byteData.buffer.asUint8List();
+          MultipartFile multipartFile = MultipartFile.fromBytes(
+            imageData,
+            filename: 'test.jpg',
+          );
+          imagesFile.add(multipartFile);
+        }
       }
     }
 
@@ -108,8 +111,12 @@ class _AddPostState extends State<AddPost> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: TextButton(
               onPressed: () {
-                widget.onSave(imagesFile, video, _describedController.text);
-                Navigator.pop(context);
+                if (_describedController.text != '') {
+                  widget.onSave(imagesFile, video, _describedController.text);
+                  Navigator.pop(context);
+                } else {
+                  Alert(message: "Hãy thêm mô tả cho bài viết").show();
+                }
               },
               child: Text(
                 'ĐĂNG',

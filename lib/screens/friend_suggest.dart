@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:zalo/bloc/friend_suggest_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zalo/bloc/friend_suggest/friend_suggest.dart';
 import 'package:zalo/models/friend_suggest.dart';
-import 'package:zalo/models/friend_suggest_response.dart';
 
 class FriendSuggestScreen extends StatefulWidget {
   static String routeName = 'friend_suggest_screen';
@@ -10,16 +10,8 @@ class FriendSuggestScreen extends StatefulWidget {
 }
 
 class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
-  @override
-  void initState() {
-    super.initState();
-    friendSuggestBloc..getListSuggests(0, 20);
-  }
-
-  void sendRequestFriend(int userid) {
-    friendSuggestBloc..requestFriend(userid);
-  }
-
+  int index = 0;
+  int count = 20;
   void requestFriend(FriendSuggest friend) {}
   _buildFriendSuggestItem(FriendSuggest user) {
     return Padding(
@@ -35,7 +27,8 @@ class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
           Spacer(),
           ElevatedButton(
             onPressed: () {
-              sendRequestFriend(user.id);
+              BlocProvider.of<FriendSuggestBloc>(context)
+                ..add(RequestFriendSuggestEvent(user));
             },
             child: Text("Kết bạn",
                 style: TextStyle(color: Colors.black, fontSize: 12)),
@@ -59,35 +52,40 @@ class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
       appBar: AppBar(
         title: Text("Gợi ý kết bạn"),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                color: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: StreamBuilder<FriendSuggestResponse>(
-                  stream: friendSuggestBloc.subject.stream,
-                  builder:
-                      (context, AsyncSnapshot<FriendSuggestResponse> snapshot) {
-                    if (snapshot.hasData) {
-                      List<FriendSuggest> friends =
-                          snapshot.data.friendSuggests;
-                      return ListView.builder(
-                        itemCount: friends.length,
-                        shrinkWrap: true,
-                        primary: false,
-                        itemBuilder: (context, index) {
-                          return _buildFriendSuggestItem(friends[index]);
-                        },
-                      );
-                    }
-                    return Container();
-                  },
-                ),
-              )
-            ],
+      body: BlocProvider<FriendSuggestBloc>(
+        create: (context) {
+          return FriendSuggestBloc()
+            ..add(LoadingFriendSuggestEvent(index: index, count: count));
+        },
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: BlocBuilder<FriendSuggestBloc, FriendSuggestState>(
+                    builder: (context, state) {
+                      if (state is ReceivedFriendSuggestState) {
+                        List<FriendSuggest> friends =
+                            state.friends.friendSuggests;
+
+                        return ListView.builder(
+                          itemCount: friends.length,
+                          shrinkWrap: true,
+                          primary: false,
+                          itemBuilder: (context, index) {
+                            return _buildFriendSuggestItem(friends[index]);
+                          },
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

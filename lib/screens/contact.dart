@@ -1,8 +1,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:zalo/bloc/friend_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:zalo/bloc/friend/friend.dart';
 import 'package:zalo/models/friend.dart';
-import 'package:zalo/models/friend_response.dart';
 import 'package:zalo/screens/friend_request.dart';
 
 class Contact extends StatefulWidget {
@@ -13,16 +13,12 @@ class Contact extends StatefulWidget {
 
 class _ContactState extends State<Contact> {
   @override
-  void initState() {
-    super.initState();
-    friendBloc..getListFriends(0, 50);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: <Widget>[
+    return BlocProvider<FriendBloc>(
+        create: (context) {
+          return FriendBloc()..add(LoadingFriendEvent());
+        },
+        child: Column(children: <Widget>[
           ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -74,25 +70,21 @@ class _ContactState extends State<Contact> {
               ),
             ),
           ),
-          StreamBuilder<FriendResponse>(
-            stream: friendBloc.subject.stream,
-            builder: (context, AsyncSnapshot<FriendResponse> snapshot) {
-              if (snapshot.hasData) {
-                List<Friend> friends = snapshot.data.friends;
-                return ListView.builder(
-                  itemCount: friends.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return _buildFriendItem(friends[index]);
-                  },
-                );
-              }
-              return Container();
-            },
-          ),
-        ],
-      ),
-    );
+          BlocBuilder<FriendBloc, FriendState>(builder: (context, state) {
+            if (state is ReceivedFriendState) {
+              List<Friend> friends = state.friends.friends;
+
+              return ListView.builder(
+                itemCount: friends.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return _buildFriendItem(friends[index]);
+                },
+              );
+            }
+            return Container();
+          })
+        ]));
   }
 
   Widget _buildFriendItem(Friend friend) {
