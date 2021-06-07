@@ -1,4 +1,4 @@
-import 'package:alert/alert.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zalo/bloc/post/post.dart';
@@ -16,11 +16,14 @@ class PostNew extends StatefulWidget {
 }
 
 class _PostNewState extends State<PostNew> {
+  int index = 0;
+  int count = 20;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PostBloc>(
       create: (context) {
-        return PostBloc()..add(LoadingPostEvent());
+        return PostBloc()..add(LoadingPostEvent(index: index, count: count));
       },
       child: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
@@ -110,6 +113,28 @@ class _PostNewState extends State<PostNew> {
                         );
                       },
                       itemCount: posts.length,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<PostBloc>(context)
+                        ..add(
+                            LoadingPostEvent(index: index, count: count + 20));
+                    },
+                    child: Text(
+                      "Xem thêm",
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                      ),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          return Colors.white54;
+                        },
+                      ),
                     ),
                   ),
                 ],

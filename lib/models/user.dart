@@ -3,6 +3,7 @@ class User {
   final String name;
   final String phonenumber;
   final String avatar;
+  final String coverImage;
   final String birthday;
   final String description;
 
@@ -11,6 +12,7 @@ class User {
     this.name,
     this.phonenumber,
     this.avatar,
+    this.coverImage,
     this.birthday,
     this.description,
   );
@@ -20,6 +22,7 @@ class User {
         name = json["name"],
         phonenumber = json["phone_number"],
         avatar = json["avatar"],
+        coverImage = json["cover_image"],
         birthday = json["birthday"],
         description = json["descriprion"];
 }

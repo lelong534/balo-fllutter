@@ -5,7 +5,8 @@ class Post {
   final String video;
   final int like;
   final int comment;
-  final String created;
+  final String createdAt;
+  final String updatedAt;
   final bool isLiked;
   // final String isHidden;
   final String authorId;
@@ -19,7 +20,8 @@ class Post {
     this.video,
     this.like,
     this.comment,
-    this.created,
+    this.createdAt,
+    this.updatedAt,
     this.isLiked,
     // this.isHidden,
     this.authorId,
@@ -34,7 +36,8 @@ class Post {
         video = json["video"],
         like = json["like"],
         comment = json["comment"],
-        created = json["created"],
+        createdAt = json["created_at"],
+        updatedAt = json["updated_at"],
         isLiked = json["isLiked"],
         // isHidden = json["is_hidden"],
         authorId = json["authorId"],

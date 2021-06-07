@@ -16,15 +16,13 @@ class PostRepository {
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
 
-  Future<PostResponse> getListPosts(int index) async {
+  Future<PostResponse> getListPosts(int index, int count) async {
     var token = await storage.read(key: "token");
-    // var userId = await storage.read(key: "userId");
     try {
       Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        // "user_id": userId,
         "index": index,
-        "count": 20,
+        "count": count,
       });
       return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
@@ -48,7 +46,6 @@ class PostRepository {
 
       Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        // "user_id": userId,
         "index": 0,
         "count": 20,
       });
@@ -70,7 +67,6 @@ class PostRepository {
 
       Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        // "user_id": userId,
         "index": 0,
         "count": 20,
       });
@@ -92,7 +88,6 @@ class PostRepository {
 
       Response response = await _dio.post(getListPostsUrl, data: {
         "token": token,
-        // "user_id": userId,
         "index": 0,
         "count": 20,
       });

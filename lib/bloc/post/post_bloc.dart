@@ -17,7 +17,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (event is LoadingPostEvent) {
       yield LoadingPostState();
       try {
-        yield await _loadPosts();
+        yield await _loadPosts(event.index, event.count);
       } catch (e) {
         yield ErrorPostState(e.toString());
       }
@@ -48,8 +48,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Future<PostState> _loadPosts() async {
-    PostResponse newState = await PostRepository().getListPosts(0);
+  Future<PostState> _loadPosts(int index, int count) async {
+    PostResponse newState = await PostRepository().getListPosts(index, count);
     return ReceivedPostState(newState);
   }
 

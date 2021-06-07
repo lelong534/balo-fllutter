@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:zalo/models/user_response.dart';
 import 'package:zalo/repositories/user_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
@@ -21,7 +22,8 @@ class AuthenticationBloc
     if (event is AppStarted) {
       final bool hasToken = await userRepository.hasToken();
       if (hasToken) {
-        yield AuthenticationAuthenticated();
+        UserResponse user = await userRepository.getUserInfo();
+        yield AuthenticationAuthenticated(user);
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -30,7 +32,8 @@ class AuthenticationBloc
     if (event is LoggedIn) {
       yield AuthenticationLoading();
       await userRepository.persistToken(event.userInfo);
-      yield AuthenticationAuthenticated();
+      UserResponse user = await userRepository.getUserInfo();
+      yield AuthenticationAuthenticated(user);
     }
 
     if (event is LoggedOut) {

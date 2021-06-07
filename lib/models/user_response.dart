@@ -11,6 +11,6 @@ class UserResponse {
         error = "";
 
   UserResponse.withError(String errorValue)
-      : user = User(null, null, null, null, null, null),
+      : user = User(null, null, null, null, null, null, null),
         error = errorValue;
 }

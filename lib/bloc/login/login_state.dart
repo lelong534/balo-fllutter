@@ -1,5 +1,3 @@
-// part of 'login_bloc.dart';
-
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 

@@ -174,6 +174,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.11"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -214,6 +221,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.19"
+  image_picker:
+    dependency: "direct main"
+    description:
+      name: image_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.7+22"
+  image_picker_platform_interface:
+    dependency: transitive
+    description:
+      name: image_picker_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6"
   intl:
     dependency: transitive
     description:
@@ -422,6 +443,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.19-nullsafety.6"
+  timelines:
+    dependency: "direct main"
+    description:
+      name: timelines
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2+1"
   typed_data:
     dependency: transitive
     description:

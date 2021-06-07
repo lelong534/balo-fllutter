@@ -12,40 +12,7 @@ class FriendSuggestScreen extends StatefulWidget {
 class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
   int index = 0;
   int count = 20;
-  void requestFriend(FriendSuggest friend) {}
-  _buildFriendSuggestItem(FriendSuggest user) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 6),
-      child: Row(
-        children: <Widget>[
-          user.avatar != null
-              ? CircleAvatar(backgroundImage: NetworkImage(user.avatar))
-              : CircleAvatar(child: Text("U")),
-          SizedBox(width: 20),
-          Text(user.username != null ? user.username : "Người dùng",
-              style: TextStyle(color: Colors.black, fontSize: 16)),
-          Spacer(),
-          ElevatedButton(
-            onPressed: () {
-              BlocProvider.of<FriendSuggestBloc>(context)
-                ..add(RequestFriendSuggestEvent(user));
-            },
-            child: Text("Kết bạn",
-                style: TextStyle(color: Colors.black, fontSize: 12)),
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0))),
-              backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                return Colors.blue[200];
-              }),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +43,48 @@ class _FriendSuggestScreenState extends State<FriendSuggestScreen> {
                           shrinkWrap: true,
                           primary: false,
                           itemBuilder: (context, index) {
-                            return _buildFriendSuggestItem(friends[index]);
+                            final user = friends[index];
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 6),
+                              child: Row(
+                                children: <Widget>[
+                                  user.avatar != null
+                                      ? CircleAvatar(
+                                          backgroundImage:
+                                              NetworkImage(user.avatar))
+                                      : CircleAvatar(child: Text("U")),
+                                  SizedBox(width: 20),
+                                  Text(
+                                      user.username != null
+                                          ? user.username
+                                          : "Người dùng",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16)),
+                                  Spacer(),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<FriendSuggestBloc>(
+                                          context)
+                                        ..add(RequestFriendSuggestEvent(user));
+                                    },
+                                    child: Text("Kết bạn",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 12)),
+                                    style: ButtonStyle(
+                                      shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0))),
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                        return Colors.blue[200];
+                                      }),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
                           },
                         );
                       }

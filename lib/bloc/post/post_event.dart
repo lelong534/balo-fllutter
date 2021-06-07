@@ -4,7 +4,15 @@ import 'package:zalo/models/post.dart';
 
 abstract class PostEvent {}
 
-class LoadingPostEvent extends PostEvent {}
+class LoadingPostEvent extends PostEvent {
+  final index;
+  final count;
+
+  LoadingPostEvent({this.index, this.count});
+
+  @override
+  String toString() => 'Loading post';
+}
 
 class LikePostEvent extends PostEvent {
   final Post post;

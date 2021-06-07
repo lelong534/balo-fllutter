@@ -21,7 +21,6 @@ class PostDetail extends StatefulWidget {
 }
 
 class _PostDetailState extends State<PostDetail> {
-  buildPostHeader(Post post) {}
 
   @override
   Widget build(BuildContext context) {

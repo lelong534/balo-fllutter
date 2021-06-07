@@ -12,5 +12,5 @@ final Map<String, WidgetBuilder> routes = {
   LoginExist.routeName: (context) => LoginExist(),
   Message.routeName: (context) => Message(),
   Contact.routeName: (context) => Contact(),
-  FriendSuggestScreen.routeName: (context) => FriendSuggestScreen(),
+  FriendSuggestScreen.routeName: (context) => FriendSuggestScreen()
 };
