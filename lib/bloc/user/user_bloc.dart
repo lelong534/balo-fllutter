@@ -20,9 +20,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
     if (event is UserChangeAvatarEvent) {
       try {
-        UserResponse user =
-            await UserRepository().changeUserAvatar(event.avatar);
-        yield UserUpdated(user);
+        yield await _changeUserAvatar(event.avatar);
       } catch (e) {
         yield UserFailure(e.toString());
       }
@@ -37,5 +35,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield UserFailure(e.toString());
       }
     }
+  }
+
+  Future<UserState> _changeUserAvatar(avatar) async {
+    UserResponse newState = await UserRepository().changeUserAvatar(avatar);
+    return UserUpdated(newState);
   }
 }

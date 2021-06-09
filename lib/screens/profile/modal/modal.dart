@@ -53,13 +53,15 @@ class _CustomDialogBoxState extends State<Modal> {
                     child: (widget.title == 'Đổi ảnh bìa'
                         ? (widget.user.coverImage != null
                             ? Image.network(widget.user.coverImage,
-                                fit: BoxFit.fitWidth)
+                                width: double.infinity, fit: BoxFit.fitWidth)
                             : Image.asset(
                                 "assets/avatar.png",
                                 fit: BoxFit.fitWidth,
                               ))
                         : (widget.user.avatar != null
                             ? Image.network(widget.user.avatar,
+                                scale: 0.1,
+                                width: double.infinity,
                                 fit: BoxFit.fitWidth)
                             : Image.asset(
                                 "assets/avatar.png",

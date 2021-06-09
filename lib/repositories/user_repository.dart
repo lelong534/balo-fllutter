@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zalo/models/user_response.dart';
@@ -83,7 +81,9 @@ class UserRepository {
         "avatar": avatar,
       });
 
-      Response response = await _dio.post(changeUserInfoUrl, data: formData);
+      await _dio.post(changeUserInfoUrl, data: formData);
+      Response response =
+          await _dio.post(getUserInfoUrl, data: {"token": token});
       print(response);
       return UserResponse.fromJson(response.data);
     } catch (error, stacktrace) {
@@ -101,7 +101,9 @@ class UserRepository {
         "cover_image": coverImage,
       });
 
-      Response response = await _dio.post(changeUserInfoUrl, data: formData);
+      await _dio.post(changeUserInfoUrl, data: formData);
+      Response response =
+          await _dio.post(getUserInfoUrl, data: {"token": token});
       print(response);
       return UserResponse.fromJson(response.data);
     } catch (error, stacktrace) {

@@ -58,7 +58,7 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               ProfileHeader(
                 avatar: (widget.user != null && widget.user.user.avatar != null)
-                    ? NetworkImage(widget.user.user.avatar)
+                    ? NetworkImage(widget.user.user.avatar, scale: 0.1)
                     : AssetImage('assets/avatar.png'),
                 coverImage:
                     (widget.user != null && widget.user.user.coverImage != null)

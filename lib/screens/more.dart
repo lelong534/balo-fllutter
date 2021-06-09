@@ -22,15 +22,13 @@ class _MoreState extends State<More> {
       return UserBloc()..add(LoadingUserEvent());
     }, child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       if (state is UserUpdated) {
-        var avatar = state.user.user.avatar;
-        var username = state.user.user.name;
-        var user = state.user;
+        var user = state.user.user;
         return ListView(
           children: <Widget>[
             ListTile(
-              leading: avatar != null
+              leading: user.avatar != null
                   ? CircleAvatar(
-                      backgroundImage: NetworkImage(avatar, scale: 0.1),
+                      backgroundImage: NetworkImage(user.avatar, scale: 0.1),
                       radius: 30,
                     )
                   : CircleAvatar(
@@ -39,7 +37,7 @@ class _MoreState extends State<More> {
                     ),
               title: GestureDetector(
                 child: Text(
-                  username != null ? username : "Người dùng",
+                  user.name != null ? user.name : "Người dùng",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -85,7 +83,8 @@ class _MoreState extends State<More> {
                               file.path,
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
-                              .add(UserChangeAvatarEvent(toImage, user));
+                              .add(UserChangeAvatarEvent(toImage, state.user));
+                          Navigator.pop(context);
                         }
                       },
                       onSelectCamera: () async {
@@ -98,7 +97,8 @@ class _MoreState extends State<More> {
                               file.path,
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
-                              .add(UserChangeAvatarEvent(toImage, user));
+                              .add(UserChangeAvatarEvent(toImage, state.user));
+                          Navigator.pop(context);
                         }
                       },
                       user: state.user.user,
@@ -132,6 +132,7 @@ class _MoreState extends State<More> {
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
                               .add(UserChangeCoverImageEvent(toImage));
+                              Navigator.pop(context);
                         }
                       },
                       onSelectCamera: () async {
@@ -145,6 +146,7 @@ class _MoreState extends State<More> {
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
                               .add(UserChangeCoverImageEvent(toImage));
+                              Navigator.pop(context);
                         }
                       },
                       user: state.user.user,
