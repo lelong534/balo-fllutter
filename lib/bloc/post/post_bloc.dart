@@ -24,6 +24,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       }
     }
 
+    if (event is LoadingMorePostEvent) {
+      try {
+        yield await _loadPosts(event.index, event.count);
+      } catch (e) {
+        yield ErrorPostState(e.toString());
+      }
+    }
+
     if (event is LikePostEvent) {
       try {
         yield await _likePost(event.post);

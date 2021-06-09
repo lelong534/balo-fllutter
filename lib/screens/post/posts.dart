@@ -118,8 +118,8 @@ class _PostNewState extends State<PostNew> {
                   ElevatedButton(
                     onPressed: () {
                       BlocProvider.of<PostBloc>(context)
-                        ..add(
-                            LoadingPostEvent(index: index, count: count + 20));
+                        ..add(LoadingMorePostEvent(
+                            index: index, count: count + 20));
                     },
                     child: Text(
                       "Xem thêm",

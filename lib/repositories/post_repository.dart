@@ -32,7 +32,8 @@ class PostRepository {
     }
   }
 
-  Future<PostResponse> getListPostsByUser(int index, int count, User user) async {
+  Future<PostResponse> getListPostsByUser(
+      int index, int count, User user) async {
     var token = await storage.read(key: "token");
     try {
       Response response = await _dio.post(getListPostsUrl, data: {

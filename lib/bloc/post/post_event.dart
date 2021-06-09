@@ -15,6 +15,16 @@ class LoadingPostEvent extends PostEvent {
   String toString() => 'Loading post';
 }
 
+class LoadingMorePostEvent extends PostEvent {
+  final index;
+  final count;
+
+  LoadingMorePostEvent({this.index, this.count});
+
+  @override
+  String toString() => 'Loading post';
+}
+
 class LikePostEvent extends PostEvent {
   final Post post;
   LikePostEvent(this.post);
