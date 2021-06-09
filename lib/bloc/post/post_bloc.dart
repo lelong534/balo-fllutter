@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zalo/bloc/post/post_event.dart';
 import 'package:zalo/bloc/post/post_state.dart';
 import 'package:zalo/models/post_response.dart';
+import 'package:zalo/models/user.dart';
 import 'package:zalo/repositories/post_repository.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
@@ -46,10 +47,23 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         yield ErrorPostState(e.toString());
       }
     }
+
+    if (event is LoadingPostByUserEvent) {
+      try {
+        yield await _loadPostsByUser(event.index, event.count, event.user);
+      } catch (e) {
+        yield ErrorPostState(e.toString());
+      }
+    }
   }
 
   Future<PostState> _loadPosts(int index, int count) async {
     PostResponse newState = await PostRepository().getListPosts(index, count);
+    return ReceivedPostState(newState);
+  }
+
+  Future<PostState> _loadPostsByUser(int index, int count, User user) async {
+    PostResponse newState = await PostRepository().getListPostsByUser(index, count, user);
     return ReceivedPostState(newState);
   }
 

@@ -30,8 +30,9 @@ class _ProfileState extends State<Profile> {
               AuthenticationBloc(userRepository: UserRepository()),
         ),
         BlocProvider<PostBloc>(
-          create: (BuildContext context) =>
-              PostBloc()..add(LoadingPostEvent(index: 0, count: 20)),
+          create: (BuildContext context) => PostBloc()
+            ..add(LoadingPostByUserEvent(
+                index: 0, count: 20, user: widget.user.user)),
         ),
       ],
       child: Scaffold(

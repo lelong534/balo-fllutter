@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:zalo/models/post.dart';
+import 'package:zalo/models/user.dart';
 
 abstract class PostEvent {}
 
@@ -39,4 +40,15 @@ class AddPostEvent extends PostEvent {
 
   @override
   String toString() => 'Add post';
+}
+
+class LoadingPostByUserEvent extends PostEvent {
+  final index;
+  final count;
+  final User user;
+
+  LoadingPostByUserEvent({this.index, this.count, this.user});
+
+  @override
+  String toString() => 'Loading post';
 }

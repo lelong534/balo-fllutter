@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:zalo/models/post.dart';
 import 'package:zalo/models/post_response.dart';
+import 'package:zalo/models/user.dart';
 
 class PostRepository {
   static String mainUrl = "https://bk-zalo.herokuapp.com";
@@ -23,6 +24,22 @@ class PostRepository {
         "token": token,
         "index": index,
         "count": count,
+      });
+      return PostResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return PostResponse.withError("$error");
+    }
+  }
+
+  Future<PostResponse> getListPostsByUser(int index, int count, User user) async {
+    var token = await storage.read(key: "token");
+    try {
+      Response response = await _dio.post(getListPostsUrl, data: {
+        "token": token,
+        "index": index,
+        "count": count,
+        "user_id": user.id
       });
       return PostResponse.fromJson(response.data);
     } catch (error, stacktrace) {
