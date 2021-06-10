@@ -30,41 +30,41 @@ var popularList = [
     description: "analyzer North Dakota",
     note: "neural communities"
   ),
-  // Popular(
-  //   id: 4,
-  //   title: "Principal Integration Analyst",
-  //   imgUrl: "assets/images/list_popular/4.jpg",
-  //   description: "Kids Future",
-  //   note: "tan Analyst Movies"
-  // ),
-  // Popular(
-  //   id: 5,
-  //   title: "Lead Optimization Architect",
-  //   imgUrl: "assets/images/list_popular/5.jpg",
-  //   description: "Plastic",
-  //   note: "Automotive Colombian Peso Unidad de Valor Real Executive"
-  // ),
-  // Popular(
-  //   id: 6,
-  //   title: "National Optimization Facilitator",
-  //   imgUrl: "assets/images/list_popular/6.jpg",
-  //   description: "models Latvia",
-  //   note: "navigate USB back-end"
-  // ),
-  // Popular(
-  //   id: 7,
-  //   title: "Human Functionality Associate",
-  //   imgUrl: "assets/images/list_popular/7.jpg",
-  //   description: "Customizable real-time firewall",
-  //   note: "Cambridgeshire Chicken fuchsia"
-  // ),
-  // Popular(
-  //   id: 8,
-  //   title: "Lead Assurance Producer",
-  //   imgUrl: "assets/images/list_popular/8.jpg",
-  //   description: "real-time Shoes",
-  //   note: "Cotton directional"
-  // ),
+  Popular(
+    id: 4,
+    title: "Principal Integration Analyst",
+    imgUrl: "assets/images/list_popular/4.jpg",
+    description: "Kids Future",
+    note: "tan Analyst Movies"
+  ),
+  Popular(
+    id: 5,
+    title: "Lead Optimization Architect",
+    imgUrl: "assets/images/list_popular/5.jpg",
+    description: "Plastic",
+    note: "Automotive Colombian Peso Unidad de Valor Real Executive"
+  ),
+  Popular(
+    id: 6,
+    title: "National Optimization Facilitator",
+    imgUrl: "assets/images/list_popular/6.jpg",
+    description: "models Latvia",
+    note: "navigate USB back-end"
+  ),
+  Popular(
+    id: 7,
+    title: "Human Functionality Associate",
+    imgUrl: "assets/images/list_popular/7.jpg",
+    description: "Customizable real-time firewall",
+    note: "Cambridgeshire Chicken fuchsia"
+  ),
+  Popular(
+    id: 8,
+    title: "Lead Assurance Producer",
+    imgUrl: "assets/images/list_popular/8.jpg",
+    description: "real-time Shoes",
+    note: "Cotton directional"
+  ),
   // Popular(
   //   id: 9,
   //   title: "Dynamic Branding Supervisor",

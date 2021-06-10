@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:zalo/models/user_response.dart';
 
 abstract class AuthenticationState extends Equatable {
   @override
@@ -7,7 +8,10 @@ abstract class AuthenticationState extends Equatable {
 
 class AuthenticationUnitialized extends AuthenticationState {}
 
-class AuthenticationAuthenticated extends AuthenticationState {}
+class AuthenticationAuthenticated extends AuthenticationState {
+  final UserResponse user;
+  AuthenticationAuthenticated(this.user);
+}
 
 class AuthenticationUnauthenticated extends AuthenticationState {}
 

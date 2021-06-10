@@ -29,7 +29,7 @@ class _WelcomeState extends State<Welcome> {
       titleWidget: Column(
         children: <Widget>[
           Text(
-            'BACH KHOA',
+            'ĐẠI HỌC BÁCH KHOA HÀ NỘI',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
           ),
           SizedBox(
@@ -46,7 +46,10 @@ class _WelcomeState extends State<Welcome> {
         ],
       ),
       body: "Một tình yêu, một tương lai.",
-      image: Center(),
+      image: Image.asset(
+        'assets/logo.png',
+        width: 100,
+      ),
       decoration: const PageDecoration(
         pageColor: Colors.white,
         bodyTextStyle: TextStyle(

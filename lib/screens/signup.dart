@@ -1,4 +1,8 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:zalo/bloc/user_bloc.dart';
+import 'package:alert/alert.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class Signup extends StatefulWidget {
   static String routeName = 'signup';
@@ -7,11 +11,47 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  bool isHidePassword = true;
+  final _phonenumberController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  final phoneValidator = MultiValidator([
+    RequiredValidator(errorText: "Bạn quên nhập ô này"),
+    MinLengthValidator(10, errorText: 'Điện thoại dài ít nhất 10 kí tự'),
+    MaxLengthValidator(10, errorText: 'Điện thoại dài nhiều nhất 10 kí tự'),
+  ]);
+
+  final passwordValidator = MultiValidator([
+    RequiredValidator(errorText: 'Bạn quên nhập ô này'),
+    MinLengthValidator(8, errorText: 'Mật khẩu dài ít nhất 8 kí tự'),
+    PatternValidator(r'(?=.*?[#?!@$%^&*-])',
+        errorText: 'Cần nhập thêm kí tự đặc biệt')
+  ]);
+
+  void _onSignupButtonPressed() {
+    if (_formKey.currentState.validate()) {
+      userBloc..signUp(_phonenumberController.text, _passwordController.text);
+      Alert(message: 'Đăng kí thành công').show();
+    }
+  }
+
+  String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Đăng ký'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _onSignupButtonPressed,
+        backgroundColor: Colors.blue,
+        child: Icon(
+          Icons.east,
+          color: Colors.white,
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -27,34 +67,75 @@ class _SignupState extends State<Signup> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    style: TextStyle(
-                      fontSize: 13,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      controller: _phonenumberController,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Số điện thoại',
+                      ),
+                      keyboardType: TextInputType.number,
+                      validator: phoneValidator,
                     ),
-                    decoration: InputDecoration(
-                      labelText: 'Số điện thoại',
+                    TextFormField(
+                        controller: _passwordController,
+                        obscureText: isHidePassword,
+                        style: TextStyle(
+                          fontSize: 13,
+                        ),
+                        onChanged: (value) => password = value,
+                        decoration: InputDecoration(
+                          labelText: 'Mật khẩu',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isHidePassword = !isHidePassword;
+                              });
+                            },
+                            icon: isHidePassword
+                                ? Icon(EvaIcons.eyeOutline)
+                                : Icon(EvaIcons.eyeOffOutline),
+                          ),
+                        ),
+                        validator: passwordValidator),
+                    TextFormField(
+                      obscureText: isHidePassword,
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                      decoration: InputDecoration(
+                          labelText: 'Nhập lại mật khẩu',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isHidePassword = !isHidePassword;
+                              });
+                            },
+                            icon: isHidePassword
+                                ? Icon(EvaIcons.eyeOutline)
+                                : Icon(EvaIcons.eyeOffOutline),
+                          )),
+                      validator: (val) =>
+                          MatchValidator(errorText: 'Mật khẩu không khớp')
+                              .validateMatch(val, password),
                     ),
-                    keyboardType: TextInputType.number,
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Mật khẩu',
-                    ),
-                  ),
-                  TextFormField(
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: 'Nhập lại mật khẩu',
-                    ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Text(
+                        "Lưu ý: Số điện thoại là dãy số có 10 chữ số. Mật khẩu chứa ít nhất 8 kí tự, trong đó có ít nhất 1 kí tự đặc biệt",
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],

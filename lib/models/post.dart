@@ -4,11 +4,12 @@ class Post {
   final List images;
   final String video;
   final int like;
-  // final int comment;
-  final String created;
+  final int comment;
+  final String createdAt;
+  final String updatedAt;
   final bool isLiked;
   // final String isHidden;
-  final String authorId;
+  final int authorId;
   final String authorName;
   final String authorAvatar;
 
@@ -18,8 +19,9 @@ class Post {
     this.images,
     this.video,
     this.like,
-    // this.comment,
-    this.created,
+    this.comment,
+    this.createdAt,
+    this.updatedAt,
     this.isLiked,
     // this.isHidden,
     this.authorId,
@@ -33,11 +35,12 @@ class Post {
         images = json["images"],
         video = json["video"],
         like = json["like"],
-        // comment = json["comment"],
-        created = json["created"],
+        comment = json["comment"],
+        createdAt = json["created_at"],
+        updatedAt = json["updated_at"],
         isLiked = json["isLiked"],
         // isHidden = json["is_hidden"],
-        authorId = json["authorId"],
+        authorId = json["author"]["id"],
         authorName = json["author"]["name"],
         authorAvatar = json["author"]["avatar"];
 }

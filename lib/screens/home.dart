@@ -1,10 +1,9 @@
-import 'package:eva_icons_flutter/icon_data.dart';
 import 'package:flutter/material.dart';
+import 'package:zalo/screens/post/posts.dart';
+import 'package:zalo/widgets/searchALL.dart';
 import 'chat.dart';
-import 'post.dart';
-import 'group.dart';
 import 'contact.dart';
-import 'more.dart';
+import 'setting/more.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class Message extends StatefulWidget {
@@ -34,6 +33,41 @@ class _MessageState extends State<Message> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[Colors.blue, Colors.blue[300]],
+            ),
+          ),
+        ),
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: <Widget>[
+            Icon(EvaIcons.searchOutline),
+            SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: TextField(
+                readOnly: true,
+                decoration: InputDecoration(
+                  hintText: "Tìm kiếm bạn bè, tin nhắn ...",
+                  hintStyle: TextStyle(
+                    color: Colors.white.withOpacity(0.6),
+                  ),
+                  border: InputBorder.none,
+                ),
+                onTap: () {
+                  showSearch(context: context, delegate: SearchAll());
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 12,
         items: <BottomNavigationBarItem>[
@@ -44,10 +78,6 @@ class _MessageState extends State<Message> {
           BottomNavigationBarItem(
             icon: Icon(EvaIcons.globe2Outline),
             label: 'Danh bạ',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(EvaIcons.peopleOutline),
-            label: 'Nhóm',
           ),
           BottomNavigationBarItem(
             icon: Icon(EvaIcons.calendarOutline),
@@ -77,8 +107,7 @@ class _MessageState extends State<Message> {
         children: <Widget>[
           Chat(),
           Contact(),
-          Group(),
-          PostScreen(),
+          PostNew(),
           More(),
         ],
       ),
