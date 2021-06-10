@@ -12,6 +12,7 @@ class FriendRepository {
   var setAcceptFriend = '$mainUrl/api/user/set_accept_friend';
   var getListFriendSuggestUrl = "$mainUrl/api/user/get_suggested_friends";
   var setRequestFriendUrl = "$mainUrl/api/user/set_request_friends";
+  var searchUrl = "$mainUrl/api/search";
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -142,6 +143,18 @@ class FriendRepository {
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
       return FriendSuggestResponse.withError("$error");
+    }
+  }
+
+  Future<FriendResponse> search(String keyword) async {
+    var token = await storage.read(key: "token");
+    try {
+      Response response = await _dio.post(searchUrl,
+          data: {"token": token, "keyword": keyword, "index": 0, "count": 20});
+      return FriendResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return FriendResponse.withError("$error");
     }
   }
 }

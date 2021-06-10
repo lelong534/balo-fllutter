@@ -20,4 +20,10 @@ class User {
         birthday = json["birthday"],
         description = json["description"],
         address = json["address"];
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "avatar": avatar,
+      };
 }

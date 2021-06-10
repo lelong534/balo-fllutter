@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zalo/bloc/friend/friend.dart';
 import 'package:zalo/models/friend.dart';
 import 'package:zalo/screens/friend_request.dart';
+import 'package:zalo/screens/profile/profile.dart';
 
 class Contact extends StatefulWidget {
   static String routeName = "contact";
@@ -94,7 +95,15 @@ class _ContactState extends State<Contact> {
         shadowColor: Colors.white12,
       ),
       onPressed: () {
-        print("tap");
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return Profile(
+                userId: friend.id,
+              );
+            },
+          ),
+        );
       },
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 10),

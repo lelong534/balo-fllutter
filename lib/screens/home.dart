@@ -54,7 +54,7 @@ class _MessageState extends State<Message> {
               child: TextField(
                 readOnly: true,
                 decoration: InputDecoration(
-                  hintText: "Tìm kiếm bạn bè, tin nhắn ...",
+                  hintText: "Tìm kiếm theo tên, số điện thoại ...",
                   hintStyle: TextStyle(
                     color: Colors.white.withOpacity(0.6),
                   ),

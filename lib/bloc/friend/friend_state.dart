@@ -42,3 +42,15 @@ class LoadingFriendState extends FriendState {
   @override
   String toString() => 'Loading';
 }
+
+class FriendSearchSuccess extends FriendState {
+  final FriendResponse friends;
+
+  @override
+  List<Object> get props => [friends];
+
+  FriendSearchSuccess(this.friends);
+
+  @override
+  String toString() => 'Friends search success';
+}

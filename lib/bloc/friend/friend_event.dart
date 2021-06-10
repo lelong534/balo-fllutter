@@ -11,3 +11,12 @@ class LoadingFriendEvent extends FriendEvent {
   @override
   String toString() => 'Load friends';
 }
+
+class SearchFriendEvent extends FriendEvent {
+  final String query;
+
+  SearchFriendEvent(this.query);
+
+  @override
+  String toString() => 'search user';
+}

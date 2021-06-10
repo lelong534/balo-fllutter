@@ -19,6 +19,15 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
         yield ErrorFriendState(e.toString());
       }
     }
+
+    if (event is SearchFriendEvent) {
+      try {
+        FriendResponse users = await FriendRepository().search(event.query);
+        yield FriendSearchSuccess(users);
+      } catch (e) {
+        yield ErrorFriendState(e.toString());
+      }
+    }
   }
 
   Future<FriendState> _loadFriends(int index, int count) async {
@@ -26,4 +35,6 @@ class FriendBloc extends Bloc<FriendEvent, FriendState> {
         await FriendRepository().getListFriends(index, count);
     return ReceivedFriendState(newState);
   }
+
+  
 }
