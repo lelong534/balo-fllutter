@@ -52,7 +52,7 @@ class _MoreState extends State<More> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) {
-                      return Profile(user: state.user);
+                      return Profile(userId: state.user.user.id);
                     },
                   ),
                 );
@@ -167,7 +167,7 @@ class _MoreState extends State<More> {
               },
             ),
             ListTile(
-              title: Text('Cập nhật giới thiệu bản thân'),
+              title: Text('Cập nhật thông tin cá nhân'),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -203,7 +203,21 @@ class _MoreState extends State<More> {
           ],
         );
       }
-      return Container();
+      return ListTile(
+        leading: CircleAvatar(
+          backgroundImage: AssetImage('assets/avatar.png'),
+          radius: 30,
+        ),
+        title: Text(
+          "Người dùng",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        subtitle: Text("Xem trang cá nhân"),
+      );
     }));
   }
 }

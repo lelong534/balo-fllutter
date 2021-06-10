@@ -39,6 +39,18 @@ class UserUpdated extends UserState {
   String toString() => 'User updated';
 }
 
+class UserDetailLoadSuccess extends UserState {
+  final UserResponse user;
+
+  @override
+  List<Object> get props => [user];
+
+  UserDetailLoadSuccess(this.user);
+
+  @override
+  String toString() => 'User detail load success';
+}
+
 class UserFailure extends UserState {
   final String error;
 

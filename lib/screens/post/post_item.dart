@@ -10,9 +10,16 @@ class PostItem extends StatelessWidget {
   final Post post;
   final Function onTap;
   final Function onDetail;
+  final Function onClickProfile;
   final Function onViewImage;
 
-  PostItem({Key key, this.post, this.onTap, this.onDetail, this.onViewImage})
+  PostItem(
+      {Key key,
+      this.post,
+      this.onTap,
+      this.onDetail,
+      this.onViewImage,
+      this.onClickProfile})
       : super(key: key);
 
   buildPostHeader(Post post) {
@@ -20,14 +27,29 @@ class PostItem extends StatelessWidget {
     avatarLink = post.authorAvatar;
     return ListTile(
       leading: avatarLink != null
-          ? CircleAvatar(
-              backgroundImage: NetworkImage(avatarLink, scale: 0.1),
+          ? GestureDetector(
+              onTap: () {
+                print(post.authorId);
+                onClickProfile();
+              },
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(avatarLink, scale: 0.1),
+              ),
             )
-          : CircleAvatar(
-              backgroundImage: AssetImage('assets/avatar.png'),
+          : GestureDetector(
+              onTap: () {
+                print(post.authorId);
+                onClickProfile();
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/avatar.png'),
+              ),
             ),
       title: GestureDetector(
-        onTap: () => print('showing profile'),
+        onTap: () {
+          print(post.authorId);
+          onClickProfile();
+        },
         child: Text(
           post.authorName != null ? post.authorName : "Người dùng",
           style: TextStyle(

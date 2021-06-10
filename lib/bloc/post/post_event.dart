@@ -55,9 +55,9 @@ class AddPostEvent extends PostEvent {
 class LoadingPostByUserEvent extends PostEvent {
   final index;
   final count;
-  final User user;
+  final int userId;
 
-  LoadingPostByUserEvent({this.index, this.count, this.user});
+  LoadingPostByUserEvent({this.index, this.count, this.userId});
 
   @override
   String toString() => 'Loading post';

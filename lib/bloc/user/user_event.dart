@@ -24,6 +24,15 @@ class UserChangeCoverImageEvent extends UserEvent {
   String toString() => 'Change coverImage';
 }
 
+class LoadUserProfile extends UserEvent {
+  final int userId;
+
+  LoadUserProfile({this.userId});
+
+  @override
+  String toString() => 'Show user profile';
+}
+
 class UserChangeInfoEvent extends UserEvent {
   final String name;
   final String description;

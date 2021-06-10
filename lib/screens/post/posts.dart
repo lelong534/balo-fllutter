@@ -8,6 +8,7 @@ import 'package:zalo/repositories/post_repository.dart';
 import 'package:zalo/screens/post/add_post.dart';
 import 'package:zalo/screens/post/post_detail/post_detail.dart';
 import 'package:zalo/screens/post/post_item.dart';
+import 'package:zalo/screens/profile/profile.dart';
 
 class PostNew extends StatefulWidget {
   final postRepository = PostRepository();
@@ -110,6 +111,17 @@ class _PostNewState extends State<PostNew> {
                               ),
                             );
                           },
+                          onClickProfile: () async {
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return Profile(
+                                    userId: post.authorId,
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         );
                       },
                       itemCount: posts.length,
@@ -141,8 +153,41 @@ class _PostNewState extends State<PostNew> {
               ),
             );
           }
-          return Center(
-            child: CircularProgressIndicator(),
+          return Container(
+            color: Colors.white,
+            height: 80,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                readOnly: true,
+                decoration: InputDecoration(
+                  hintText: "Hôm nay bạn thế nào?",
+                  hintStyle: TextStyle(
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                  border: InputBorder.none,
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return AddPost(
+                          onSave: (images, video, description) {
+                            BlocProvider.of<PostBloc>(context).add(
+                              AddPostEvent(
+                                images: images,
+                                video: video,
+                                description: description,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
           );
         },
       ),

@@ -1,5 +1,5 @@
 class User {
-  final String id;
+  final int id;
   final String name;
   final String phonenumber;
   final String avatar;
@@ -12,7 +12,7 @@ class User {
       this.birthday, this.description, this.address);
 
   User.fromJson(Map<String, dynamic> json)
-      : id = json["id"].toString(),
+      : id = json["id"],
         name = json["name"],
         phonenumber = json["phone_number"],
         avatar = json["avatar"],

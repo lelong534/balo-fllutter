@@ -8,6 +8,7 @@ class UserRepository {
   var signUpUrl = '$mainUrl/api/signup';
   var getUserInfoUrl = '$mainUrl/api/user/get_user_info';
   var changeUserInfoUrl = '$mainUrl/api/change_user_info';
+  var getUserByIdUrl = '$mainUrl/api/get_user_by_id';
 
   final FlutterSecureStorage storage = new FlutterSecureStorage();
   final Dio _dio = Dio();
@@ -65,6 +66,20 @@ class UserRepository {
     try {
       Response response =
           await _dio.post(getUserInfoUrl, data: {"token": token});
+      return UserResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return UserResponse.withError("$error");
+    }
+  }
+
+  Future<UserResponse> getUserById(int userId) async {
+    var token = await storage.read(key: "token");
+    try {
+      Response response = await _dio.post(getUserByIdUrl, data: {
+        "token": token,
+        "user_id": userId,
+      });
       return UserResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");

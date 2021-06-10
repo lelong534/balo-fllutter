@@ -9,7 +9,7 @@ class Post {
   final String updatedAt;
   final bool isLiked;
   // final String isHidden;
-  final String authorId;
+  final int authorId;
   final String authorName;
   final String authorAvatar;
 
@@ -40,7 +40,7 @@ class Post {
         updatedAt = json["updated_at"],
         isLiked = json["isLiked"],
         // isHidden = json["is_hidden"],
-        authorId = json["authorId"],
+        authorId = json["author"]["id"],
         authorName = json["author"]["name"],
         authorAvatar = json["author"]["avatar"];
 }
