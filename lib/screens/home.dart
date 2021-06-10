@@ -3,7 +3,7 @@ import 'package:zalo/screens/post/posts.dart';
 import 'package:zalo/widgets/search.dart';
 import 'chat.dart';
 import 'contact.dart';
-import 'more.dart';
+import 'setting/more.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class Message extends StatefulWidget {

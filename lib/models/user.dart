@@ -6,16 +6,10 @@ class User {
   final String coverImage;
   final String birthday;
   final String description;
+  final String address;
 
-  User(
-    this.id,
-    this.name,
-    this.phonenumber,
-    this.avatar,
-    this.coverImage,
-    this.birthday,
-    this.description,
-  );
+  User(this.id, this.name, this.phonenumber, this.avatar, this.coverImage,
+      this.birthday, this.description, this.address);
 
   User.fromJson(Map<String, dynamic> json)
       : id = json["id"].toString(),
@@ -24,5 +18,6 @@ class User {
         avatar = json["avatar"],
         coverImage = json["cover_image"],
         birthday = json["birthday"],
-        description = json["descriprion"];
+        description = json["description"],
+        address = json["address"];
 }

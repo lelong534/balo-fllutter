@@ -111,4 +111,26 @@ class UserRepository {
       return UserResponse.withError("$error");
     }
   }
+
+  Future<UserResponse> changeUserInfo(
+      String name, String description, String address) async {
+    var token = await storage.read(key: "token");
+    try {
+      var formData = FormData.fromMap({
+        "token": token,
+        "username": name,
+        "description": description,
+        "address": address
+      });
+
+      await _dio.post(changeUserInfoUrl, data: formData);
+      Response response =
+          await _dio.post(getUserInfoUrl, data: {"token": token});
+      print(response);
+      return UserResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured: $error stackTrace: $stacktrace");
+      return UserResponse.withError("$error");
+    }
+  }
 }

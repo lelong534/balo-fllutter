@@ -9,6 +9,8 @@ import 'package:zalo/bloc/auth/auth.dart';
 import 'package:zalo/bloc/user/user.dart';
 import 'package:zalo/screens/profile/modal/modal.dart';
 import 'package:zalo/screens/profile/profile.dart';
+import 'package:zalo/screens/setting/change_user_info.dart';
+import 'package:zalo/screens/setting/user_infomation.dart';
 
 class More extends StatefulWidget {
   @override
@@ -58,6 +60,15 @@ class _MoreState extends State<More> {
             ),
             ListTile(
               title: Text('Thông tin'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return UserInfomation(user: state.user.user);
+                    },
+                  ),
+                );
+              },
             ),
             ListTile(
               title: Text('Đổi ảnh đại diện'),
@@ -132,7 +143,7 @@ class _MoreState extends State<More> {
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
                               .add(UserChangeCoverImageEvent(toImage));
-                              Navigator.pop(context);
+                          Navigator.pop(context);
                         }
                       },
                       onSelectCamera: () async {
@@ -146,7 +157,7 @@ class _MoreState extends State<More> {
                               filename: 'avartar.png');
                           BlocProvider.of<UserBloc>(context)
                               .add(UserChangeCoverImageEvent(toImage));
-                              Navigator.pop(context);
+                          Navigator.pop(context);
                         }
                       },
                       user: state.user.user,
@@ -157,8 +168,16 @@ class _MoreState extends State<More> {
             ),
             ListTile(
               title: Text('Cập nhật giới thiệu bản thân'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return ChangeUserInfo(user: state.user.user);
+                    },
+                  ),
+                );
+              },
             ),
-            ListTile(title: Text('Ví của tôi')),
             ListTile(
               title: Text(
                 'Cài đặt',

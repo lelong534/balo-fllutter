@@ -35,6 +35,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         yield UserFailure(e.toString());
       }
     }
+
+    if (event is UserChangeInfoEvent) {
+      try {
+        UserResponse user =
+            await UserRepository().changeUserInfo(event.name, event.description, event.address);
+        yield UserUpdated(user);
+      } catch (e) {
+        yield UserFailure(e.toString());
+      }
+    }
   }
 
   Future<UserState> _changeUserAvatar(avatar) async {

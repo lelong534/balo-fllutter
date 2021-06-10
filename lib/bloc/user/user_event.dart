@@ -23,3 +23,14 @@ class UserChangeCoverImageEvent extends UserEvent {
   @override
   String toString() => 'Change coverImage';
 }
+
+class UserChangeInfoEvent extends UserEvent {
+  final String name;
+  final String description;
+  final String address;
+
+  UserChangeInfoEvent(this.name, this.description, this.address);
+
+  @override
+  String toString() => 'Change info';
+}
